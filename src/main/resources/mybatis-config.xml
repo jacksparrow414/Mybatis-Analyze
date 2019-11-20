@@ -16,7 +16,7 @@
     <mappers>
         <!--单个mapper文件的配置-->
         <mapper resource="mapper/UserMapper.xml"/>
-        <!--整个dao包下面的配置-->
+        <!--整个dao包下面的配置,这种方式,Mapper和Mapper.xml文件必须在同一个包下面-->
         <!--<package name="com.example.mybatis.demomybatis.dao"/>-->
     </mappers>
 </configuration>
