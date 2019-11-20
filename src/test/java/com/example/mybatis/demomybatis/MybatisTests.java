@@ -25,6 +25,7 @@ public class MybatisTests {
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
         // 读取配置文件,将所有配置好的Mapper接口，在XMLConfigBuilder中parseConfiguration方法里的mapperElement子方法里加进去，
+        // 在这期间会走configurationElement方法，将获得的Mapper.xml文件转为MapperStatement对象保存至configuration中,
         // 最终的执行方法在XMLMapperBuilder.parse()里的bindMapperForNamespace()调用，
         // Configuration.addMapper()方法里通过MapperRegistry.addMapper()方法，
         // 放到一个Map里面去,
