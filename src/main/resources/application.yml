@@ -4,6 +4,9 @@ spring:
   application:
     name: mybatis-demo
   datasource:
-    url: jdbc:mysql://localhost:3306/dhb
+    url: jdbc:mysql://localhost:3306/dhb?serverTimezone=UTC
     password: 12345
     username: root
+mybatis:
+  config-location: classpath:mybatis-spring-config.xml
+  mapper-locations: classpath:mapper/UserMapper.xml
