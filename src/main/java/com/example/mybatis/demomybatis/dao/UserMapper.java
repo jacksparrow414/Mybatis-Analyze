@@ -12,4 +12,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper {
 
     void addUser(UserEntity entity);
+
+    UserEntity getUser();
 }

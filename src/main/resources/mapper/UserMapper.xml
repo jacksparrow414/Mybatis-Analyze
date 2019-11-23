@@ -5,4 +5,7 @@
     <insert id="addUser" parameterType="com.example.mybatis.demomybatis.entity.UserEntity">
         INSERT INTO user (id, name, age) values (#{id},#{name},#{age})
     </insert>
+    <select id="getUser" resultType="com.example.mybatis.demomybatis.entity.UserEntity">
+        select * from user;
+    </select>
 </mapper>
