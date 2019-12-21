@@ -40,11 +40,11 @@ public class MybatisTests {
         entity.setName("op7");
         entity.setId(7);
         // 第一种方式、获取对应的mapper，然后调用对应的方法即可,这里获取的UserMapper 的动态代理类MapperProxy对象
-       // UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
         // 执行的时候调用MapperProxy.invoke方法执行,里面最后会执行 mapperMethod.execute(sqlSession, args)，
         // 然后MapperMethod.execute(),根据不同的SQLCommand(insert,update,delete,select)执行sqlSession.insert等不同的方法，
         // 接下来的执行就和第二种方式一毛一样了
-       // mapper.addUser(entity);
+        mapper.addUser(entity);
         // 第二种方式、直接调用sqlsession的内置方法,两个参数，第一个参数是，mapper里的具体方法的完整路径，第二个参数是方法的入参
         sqlSession.insert("com.example.mybatis.demomybatis.dao.UserMapper.addUser",entity);
         sqlSession.commit();
