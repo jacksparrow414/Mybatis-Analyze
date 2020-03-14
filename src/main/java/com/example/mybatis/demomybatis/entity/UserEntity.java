@@ -1,5 +1,9 @@
 package com.example.mybatis.demomybatis.entity;
 
+import com.example.mybatis.demomybatis.annotation.AddCheck;
+import com.example.mybatis.demomybatis.annotation.UpdateCheck;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -7,7 +11,9 @@ import java.io.Serializable;
  * @date 2019/11/14 9:41
  */
 public class UserEntity implements Serializable {
+    @NotNull(groups = UpdateCheck.class)
     private Integer id;
+    @NotNull(groups = AddCheck.class)
     private String name;
     private Integer age;
 

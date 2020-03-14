@@ -1,5 +1,7 @@
 package com.example.mybatis.demomybatis.handler;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -11,13 +13,20 @@ import java.lang.reflect.Method;
 public class CommonProxyHandler implements InvocationHandler {
 
     private Object target;
+    private String name;
 
-    public CommonProxyHandler(Object tarject) {
-        this.target = tarject;
+    public CommonProxyHandler(Object target, String name) {
+        this.target = target;
+        this.name = name;
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        return method.invoke(target,args);
+        // return "hhhhh";
+        String s = StringUtils.upperCase(name);
+        System.out.println(s);
+        Object invoke = method.invoke(target, args);
+        System.out.println("目标方法执行完毕");
+        return invoke;
     }
 }
