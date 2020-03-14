@@ -10,6 +10,14 @@ import com.example.mybatis.demomybatis.service.ProxyService;
 public class ProxyServiceImpl implements ProxyService {
     @Override
     public String print(String message) {
-        return message;
+        return "我不是代理";
+    }
+
+    public static void main(String[] args) {
+        StringBuilder a = new StringBuilder("uuiii,\n");
+        a.append("kkaalal,\n");
+        a.append("njjjjj,\n");
+
+        System.out.println(a.toString());
     }
 }

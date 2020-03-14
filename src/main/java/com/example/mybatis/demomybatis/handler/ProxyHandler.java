@@ -17,22 +17,13 @@ public class ProxyHandler<T> implements InvocationHandler {
     }
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        try {
-            if (!proxyInterface.isInstance(proxyInterface)) {
-
-                // 代理之前处理
-               return method.invoke(this,args);
-            }
-        }catch (Exception e){
-            e.getCause();
+    public Object invoke(Object proxy, Method method, Object[] args) {
+        String s = null;
+        System.out.println(proxyInterface.getName());
+        if ("getString".equals(method.getName())) {
+            s = args[0].toString();
+            System.out.println(s);
         }
-        return getMessage(args);
+        return s;
     }
-
-    private Object getMessage(Object[] args) {
-        String result = (String) args[0];
-        return result;
-    }
-
 }
