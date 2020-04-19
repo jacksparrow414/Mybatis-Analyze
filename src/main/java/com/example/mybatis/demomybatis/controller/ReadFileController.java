@@ -1,6 +1,7 @@
 package com.example.mybatis.demomybatis.controller;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,11 +53,13 @@ public class ReadFileController {
             // 3、接着从输入流inputStream中读出bytes.length长度的字节到bytes数组中
             // 4、然后利用输出流outputStream将bytes字节数组中的数据写入到目标文件中,off和len代表从bytes的起始位置和终止位置
 
-
+            // 使用这种获取流的方式则会报内存溢出，因为，是把流的所有都变为数组
+            byte[] bytes1 = IOUtils.toByteArray(inputStream);
+//     IOUtils.copy(inputStream,fileOutputStream);
             // 按照上述规则应该不会出现内存溢出的情况啊，因为用作缓冲的bytes一般也就几M，怎么会出现那内存溢出呢？
-            while (-1 != (n=inputStream.read(bytes))){
-                 fileOutputStream.write(bytes,0,n);
-             }
+//            while (-1 != (n=inputStream.read(bytes))){
+//                 fileOutputStream.write(bytes,0,n);
+//             }
              return true;
         } catch (IOException e) {
             e.printStackTrace();
