@@ -20,6 +20,8 @@
         <commons.fileupload.version>1.2.2</commons.fileupload.version>
         <commons.io.version>2.5</commons.io.version>
         <fastjson.version>1.2.62</fastjson.version>
+        <solr.version>8.5.0</solr.version>
+        <huTool.version>5.3.2</huTool.version>
     </properties>
 
     <dependencies>
@@ -48,6 +50,11 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-solr</artifactId>
+            <version>4.1.7.RELEASE</version>
         </dependency>
         <!--开发jar包-->
         <dependency>
@@ -78,6 +85,16 @@
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>6.1.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>${solr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${huTool.version}</version>
         </dependency>
     </dependencies>
 
