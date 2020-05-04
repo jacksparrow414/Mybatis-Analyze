@@ -1,4 +1,4 @@
-package com.example.mybatis.demomybatis;
+package com.example.mybatis.demomybatis.proxy;
 
 import com.example.mybatis.demomybatis.handler.ProxyHandler;
 import com.example.mybatis.demomybatis.service.SchoolService;

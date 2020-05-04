@@ -2,6 +2,7 @@ package com.example.mybatis.demomybatis.solr;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.example.mybatis.demomybatis.entity.SolrUserEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -18,6 +19,7 @@ import java.util.Map;
  * @date 2020-05-03
  * @description: TODO
  */
+@Slf4j
 @Service
 public class SolrService {
    private final String SOLR_CORE = "customData";

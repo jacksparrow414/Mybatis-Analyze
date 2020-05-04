@@ -1,6 +1,5 @@
-package com.example.mybatis.demomybatis;
+package com.example.mybatis.demomybatis.solr;
 
-import com.example.mybatis.demomybatis.solr.SolrService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @date 2020-05-03
  * @description: TODO
  */
-@SpringBootTest
+@SpringBootTest()
 public class SolrTests {
 
     @Autowired
