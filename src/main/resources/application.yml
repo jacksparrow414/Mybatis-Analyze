@@ -9,9 +9,9 @@ spring:
     username: root
   aop:
     proxy-target-class: false
-  data:
-    solr:
-      host: http://locahost:8983/solr
+#  data:
+#    solr:
+#      host: http://localhost:8983/solr
 mybatis:
   config-location: classpath:mybatis-spring-config.xml
   mapper-locations: classpath:mapper/UserMapper.xml

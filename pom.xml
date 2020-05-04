@@ -22,6 +22,7 @@
         <fastjson.version>1.2.62</fastjson.version>
         <solr.version>8.5.0</solr.version>
         <huTool.version>5.3.2</huTool.version>
+        <lombok.version>1.18.12</lombok.version>
     </properties>
 
     <dependencies>
@@ -95,6 +96,12 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${huTool.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
