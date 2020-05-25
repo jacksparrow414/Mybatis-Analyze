@@ -3,15 +3,90 @@ server:
 spring:
   application:
     name: mybatis-demo
-  datasource:
-    url: jdbc:mysql://localhost:3306/dhb?serverTimezone=UTC
-    password: 12345
-    username: root
+  shardingsphere:
+    datasource:
+      # 数据库的别名
+      names: ds0,ds1,ds0-slave0,ds0-slave1
+      ds0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/dhb?serverTimezone=UTC
+        password: 12345
+        username: root
+      ds0-slave0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3307/dhb?serverTimezone=UTC
+        password: 12345
+        username: root
+      ds0-slave1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3308/dhb?serverTimezone=UTC
+        password: 12345
+        username: root
+      ds1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3310/dhb?serverTimezone=UTC
+        password: 12345
+        username: root
+    sharding:
+      # 默认分库策略
+      default-database-strategy:
+        inline:
+          sharding-column: id
+          algorithm-expression: ds$->{id % 2}
+      # 默认分表策略
+      default-table-strategy:
+        inline:
+          sharding-column: age
+          algorithm-expression: user_$->{age % 2}
+      # 数据节点
+      tables:
+        user:
+          actual-data-nodes: ds$->{0..1}.user_$->{0..1}
+      # 默认数据库
+      default-data-source-name: ds0
+      master-slave-rules:
+        ds0:
+          master-data-source-name: ds0
+          slave-data-source-names: ds0-slave0,ds0-slave1
+          #从库负载均衡算法类型，可选值：ROUND_ROBIN，RANDOM。
+          #若`load-balance-algorithm-class-name`存在则忽略该配置
+          load-balance-algorithm-type: ROUND_ROBIN
+          #从库负载均衡算法类名称。该类需实现MasterSlaveLoadBalanceAlgorithm接口且提供无参数构造器
+          #load-balance-algorithm-class-name=
+    props:
+      # 打印SQL
+      sql.show: true
+      check:
+        table:
+          metadata:
+          # 是否在启动时检查分表元数据一致性
+          enabled: true
   aop:
     proxy-target-class: false
+    # 因为Druid数据源和默认的数据源冲突，添加此配置
+  main:
+    allow-bean-definition-overriding: true
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+  mapper-locations: classpath:/mapper/*.xml
+  typeAliasesPackage: com.example.mybatis.demomybatis.entity
+#以下配置是学习solr时的配置
 #  data:
 #    solr:
 #      host: http://localhost:8983/solr
-mybatis:
-  config-location: classpath:mybatis-spring-config.xml
-  mapper-locations: classpath:mapper/UserMapper.xml
+
+#以下配置是学习Mybatis时的配置
+#mybatis:
+#  config-location: classpath:mybatis-spring-config.xml
+#  mapper-locations: classpath:mapper/UserMapper.xml

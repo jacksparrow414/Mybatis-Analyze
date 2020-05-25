@@ -1,9 +1,7 @@
 package com.example.mybatis.demomybatis.service.impl;
 
-import com.example.mybatis.demomybatis.dao.UserMapper;
 import com.example.mybatis.demomybatis.entity.UserEntity;
 import com.example.mybatis.demomybatis.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
