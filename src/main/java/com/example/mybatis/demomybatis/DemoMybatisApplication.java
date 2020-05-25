@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  *
  * 如果使用spring-mybatis，把MapperScan注释放开
  */
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
- //@MapperScan(basePackages = "com.example.mybatis.demomybatis.dao")
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+//@MapperScan(basePackages = "com.example.mybatis.demomybatis.dao")
 public class DemoMybatisApplication {
 
     public static void main(String[] args) {
