@@ -62,7 +62,7 @@ spring:
       sql.show: true
       check:
         table:
-          metadata:
+          metadata: true
           # 是否在启动时检查分表元数据一致性
           enabled: true
   aop:
