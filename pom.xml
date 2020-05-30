@@ -110,11 +110,10 @@
         <dependency>
             <groupId>org.apache.shardingsphere</groupId>
             <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-            <!--使用4.1.0会报dao找不到的错误-->
             <version>4.1.0</version>
         </dependency>
-        <!-- for spring namespace -->
 
+        <!--如果要使用druid-spring-boot-starter则必须使用sharding-jdbc的4.0.0-RC1版本-->
         <!--<dependency>-->
             <!--<groupId>com.alibaba</groupId>-->
             <!--<artifactId>druid-spring-boot-starter</artifactId>-->
