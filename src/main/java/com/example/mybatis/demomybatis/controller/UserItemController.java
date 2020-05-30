@@ -2,6 +2,7 @@ package com.example.mybatis.demomybatis.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.example.mybatis.demomybatis.entity.UserItem;
 import com.example.mybatis.demomybatis.service.UserItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,12 @@ public class UserItemController {
     }
 
     @GetMapping(value = "getItem")
-    public UserItem get(Long id,Integer age){
+    public UserItem get(@RequestParam(required = false) Long id,
+                        @RequestParam(required = false) Integer age,
+                        @RequestParam(required = false) String name){
        return itemService.getOne(new LambdaQueryWrapper<UserItem>()
-               .eq(UserItem::getId,id)
-               .eq(UserItem::getAge,age));
+               .eq(id != null,UserItem::getId,id)
+               .eq(age != null,UserItem::getAge,age)
+               .eq(StringUtils.isNotEmpty(name),UserItem::getName,name));
     }
 }
