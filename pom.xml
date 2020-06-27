@@ -26,6 +26,7 @@
         <druid.version>1.1.21</druid.version>
         <mybatis.plus.version>3.1.0</mybatis.plus.version>
         <jedis.version>3.2.0</jedis.version>
+        <jackson.version>2.10.2</jackson.version>
     </properties>
 
     <dependencies>
@@ -135,6 +136,21 @@
             <version>${jedis.version}</version>
             <type>jar</type>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
     </dependencies>
 
