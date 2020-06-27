@@ -4,6 +4,7 @@ import com.example.mybatis.demomybatis.entity.UserEntity;
 import com.example.mybatis.demomybatis.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 /**
  * @Author jacksparrow414
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
      */
     public void addUser(UserEntity entity) {
         System.out.println(entity.getName());
+        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
        // userMapper.addUser(entity);
        // this.addTwo();
     }
