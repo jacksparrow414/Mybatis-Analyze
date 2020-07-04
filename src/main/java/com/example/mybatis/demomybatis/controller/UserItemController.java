@@ -5,9 +5,15 @@ import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.example.mybatis.demomybatis.entity.UserItem;
 import com.example.mybatis.demomybatis.service.UserItemService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author jacksparrow414
@@ -31,10 +37,10 @@ public class UserItemController {
     }
 
     @GetMapping(value = "getItem")
-    public UserItem get(@RequestParam(required = false) Long id,
+    public List<UserItem> get(@RequestParam(required = false) Long id,
                         @RequestParam(required = false) Integer age,
                         @RequestParam(required = false) String name){
-       return itemService.getOne(new LambdaQueryWrapper<UserItem>()
+       return itemService.list(new LambdaQueryWrapper<UserItem>()
                .eq(id != null,UserItem::getId,id)
                .eq(age != null,UserItem::getAge,age)
                .eq(StringUtils.isNotEmpty(name),UserItem::getName,name));
