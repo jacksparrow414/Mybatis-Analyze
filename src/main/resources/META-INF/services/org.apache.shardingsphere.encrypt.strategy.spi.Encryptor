@@ -1,0 +1,4 @@
+com.example.mybatis.demomybatis.shardingsphere.encrypt.Sha256Encryptor
+org.apache.shardingsphere.encrypt.strategy.impl.AESEncryptor
+org.apache.shardingsphere.encrypt.strategy.impl.MD5Encryptor
+com.example.mybatis.demomybatis.shardingsphere.encrypt.Sha256RandomEncryptor
