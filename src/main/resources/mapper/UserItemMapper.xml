@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatis.demomybatis.dao.UserItemMapper">
+  <select id="listByCondition"
+    resultType="com.example.mybatis.demomybatis.entity.UserItem">
+    select * from
+    user
+    <where>
+    id = 1266550974655287297 and
+       age = #{age}
+    </where>
+  </select>
+</mapper>

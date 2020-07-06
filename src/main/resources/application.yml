@@ -6,7 +6,7 @@ spring:
   shardingsphere:
     datasource:
       # 数据库的别名
-      names: ds0
+      names: ds0,ds1
 
       # 主库1
       ds0:
@@ -31,32 +31,32 @@ spring:
 #        username: root
 #
 #      # 主库2
-#      ds1:
-#        type: com.alibaba.druid.pool.DruidDataSource
-#        driverClassName: com.mysql.jdbc.Driver
-#        url: jdbc:mysql://localhost:3310/dhb?serverTimezone=UTC
-#        password: 12345
-#        username: root
+      ds1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3310/dhb?serverTimezone=UTC
+        password: 12345
+        username: root
 #
 #    # 数据分片配置---start
     sharding:
-#      # 默认分库策略
-#      default-database-strategy:
-#        inline:
-#          sharding-column: id
-#          algorithm-expression: ds$->{id % 2}
-#      # 默认分表策略
-#      default-table-strategy:
-#        inline:
-#          sharding-column: age
-#          algorithm-expression: user_$->{age % 2}
-#      # 数据节点
-#      tables:
-#        user:
-#          actual-data-nodes: ds$->{0..1}.user_$->{0..1}
-#      # 默认数据库
-#      default-data-source-name: ds0
-#    # 数据分片配置---end
+      # 默认分库策略
+      default-database-strategy:
+        inline:
+          sharding-column: id
+          algorithm-expression: ds$->{id % 2}
+      # 默认分表策略
+      default-table-strategy:
+        inline:
+          sharding-column: age
+          algorithm-expression: user_$->{age % 2}
+      # 数据节点
+      tables:
+        user:
+          actual-data-nodes: ds$->{0..1}.user_$->{0..1}
+      # 默认数据库
+      default-data-source-name: ds0
+    # 数据分片配置---end
 #
 #
 #      # 读写分离配置---start
@@ -73,39 +73,39 @@ spring:
 #
 #
       # 数据脱敏规则配置---start
-      encrypt-rule:
-          encryptors:
-#            encryptor_sha256:
-              # 加密、解密器的名字，内置的为MD5，aes.
-              # 可以自定义，实现
-              # com.example.mybatis.demomybatis.shardingsphere.encrypt
-              # 或者
-              # org.apache.shardingsphere.encrypt.strategy.spi.QueryAssistedEncryptor
-              # 这两个接口即可
-#              type: SHA256
-
-            encryptor_MD5:
-              type: md5
-
-            encryptor_sha256random:
-              type: SHA256_RANDOM
-
-
-          tables:
-            # 数据库，对应上面分片的tables
-             user:
-              columns:
-                # 逻辑列,就是写SQL里面的列，因为实体类的名字和数据库的加密列一致，所以这里都是name
-                name:
-                  # 密文列，用来存储密文数据
-                  cipherColumn: name
-                  # 加密器名字
-                  encryptor: encryptor_sha256random
-                  # 辅助查询列
-                  assistedQueryColumn: same_data
-                other_info:
-                  cipherColumn: info
-                  encryptor: encryptor_MD5
+#      encrypt-rule:
+#          encryptors:
+##            encryptor_sha256:
+#              # 加密、解密器的名字，内置的为MD5，aes.
+#              # 可以自定义，实现
+#              # com.example.mybatis.demomybatis.shardingsphere.encrypt
+#              # 或者
+#              # org.apache.shardingsphere.encrypt.strategy.spi.QueryAssistedEncryptor
+#              # 这两个接口即可
+##              type: SHA256
+#
+#            encryptor_MD5:
+#              type: md5
+#
+#            encryptor_sha256random:
+#              type: SHA256_RANDOM
+#
+#
+#          tables:
+#            # 数据库，对应上面分片的tables
+#             user:
+#              columns:
+#                # 逻辑列,就是写SQL里面的列，因为实体类的名字和数据库的加密列一致，所以这里都是name
+#                name:
+#                  # 密文列，用来存储密文数据
+#                  cipherColumn: name
+#                  # 加密器名字
+#                  encryptor: encryptor_sha256random
+#                  # 辅助查询列
+#                  assistedQueryColumn: same_data
+#                other_info:
+#                  cipherColumn: info
+#                  encryptor: encryptor_MD5
       # 数据脱敏规则配置---end
       broadcast-tables:
     props:
