@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.example.mybatis.demomybatis.entity.UserItem;
 import com.example.mybatis.demomybatis.service.UserItemService;
 import java.util.List;
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,5 +45,10 @@ public class UserItemController {
                .eq(id != null,UserItem::getId,id)
                .eq(age != null,UserItem::getAge,age)
                .eq(StringUtils.isNotEmpty(name),UserItem::getName,name));
+    }
+    
+    @GetMapping(value = "listByCondition")
+    public List<UserItem> listByCondition(@RequestParam(required = false) Integer age){
+        return itemService.listByCondition(age);
     }
 }
