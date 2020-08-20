@@ -3,16 +3,24 @@ server:
 spring:
   application:
     name: mybatis-demo
+  datasource:
+    # sharding-proxy配置
+#    url: jdbc:mysql://localhost:13306/sharding_db?serverTimezone=UTC
+#    username: sharding
+#    password: 123456
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # sharding-jdbc配置
   shardingsphere:
     datasource:
       # 数据库的别名
-      names: ds0,ds1
+      names: ds-0-1073741823,ds-1073741824-2147483647
 
       # 主库1
-      ds0:
+      ds-0-1073741823:
         type: com.alibaba.druid.pool.DruidDataSource
         driverClassName: com.mysql.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/dhb?serverTimezone=UTC
+        url: jdbc:mysql://localhost:3306/demo_ds_0?serverTimezone=UTC
         password: 12345
         username: root
 #      # 主库1的从库1
@@ -30,32 +38,49 @@ spring:
 #        password: 12345
 #        username: root
 #
-#      # 主库2
-      ds1:
+      # 主库2
+      ds-1073741824-2147483647:
         type: com.alibaba.druid.pool.DruidDataSource
         driverClassName: com.mysql.jdbc.Driver
-        url: jdbc:mysql://localhost:3310/dhb?serverTimezone=UTC
+        url: jdbc:mysql://localhost:3306/demo_ds_1?serverTimezone=UTC
         password: 12345
         username: root
 #
-#    # 数据分片配置---start
+    # 数据分片配置---start
     sharding:
-      # 默认分库策略
-      default-database-strategy:
-        inline:
-          sharding-column: id
-          algorithm-expression: ds$->{id % 2}
-      # 默认分表策略
-      default-table-strategy:
-        inline:
-          sharding-column: age
-          algorithm-expression: user_$->{age % 2}
+#      # 默认分库策略
+#      default-database-strategy:
+#        inline:
+#          sharding-column: id
+#          algorithm-expression: ds$->{id % 2}
+#      # 默认分表策略
+#      default-table-strategy:
+#        inline:
+#          sharding-column: age
+#          algorithm-expression: user_$->{age % 2}
       # 数据节点
       tables:
-        user:
-          actual-data-nodes: ds$->{0..1}.user_$->{0..1}
-      # 默认数据库
-      default-data-source-name: ds0
+        sns_resource_basic:
+          actual-data-nodes: ds-0-1073741823.sns_resource_basic,ds-1073741824-2147483647.sns_resource_basic
+          databaseStrategy:
+            standard:
+              shardingColumn: res_id
+#              精度分片算法 配置
+              preciseAlgorithmClassName: com.example.mybatis.demomybatis.shardingsphere.algorithm.CustomPreciseShardingAlgorithm
+        sns_resource_essay:
+          actual-data-nodes: ds-0-1073741823.sns_resource_essay,ds-1073741824-2147483647.sns_resource_essay
+          databaseStrategy:
+            standard:
+              shardingColumn: res_id
+              preciseAlgorithmClassName: com.example.mybatis.demomybatis.shardingsphere.algorithm.CustomPreciseShardingAlgorithm
+        sns_resource_cache:
+          actual-data-nodes: ds-0-1073741823.sns_resource_cache,ds-1073741824-2147483647.sns_resource_cache
+          databaseStrategy:
+            standard:
+              shardingColumn: res_id
+              preciseAlgorithmClassName: com.example.mybatis.demomybatis.shardingsphere.algorithm.CustomPreciseShardingAlgorithm
+#      # 默认数据库
+#      default-data-source-name: ds0
     # 数据分片配置---end
 #
 #
@@ -107,19 +132,22 @@ spring:
 #                  cipherColumn: info
 #                  encryptor: encryptor_MD5
       # 数据脱敏规则配置---end
-      broadcast-tables:
+
+  #      broadcast-tables:
     props:
       # 打印SQL
       sql.show: true
-      check:
-        table:
-          metadata: true
-          # 是否在启动时检查分表元数据一致性
-          enabled: true
-      query:
-         with:
-           cipher:
-             column: true
+#      check:
+#        table:
+#          metadata: true
+#          # 是否在启动时检查分表元数据一致性
+#          enabled: true
+#      query:
+#         with:
+#           cipher:
+#             column: true
+
+
 
 
   aop:

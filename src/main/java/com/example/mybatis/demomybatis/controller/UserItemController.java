@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.example.mybatis.demomybatis.entity.UserItem;
 import com.example.mybatis.demomybatis.service.UserItemService;
 import java.util.List;
-import jdk.nashorn.internal.objects.annotations.Getter;
+import org.openjdk.jol.info.ClassLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,5 +50,9 @@ public class UserItemController {
     @GetMapping(value = "listByCondition")
     public List<UserItem> listByCondition(@RequestParam(required = false) Integer age){
         return itemService.listByCondition(age);
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(ClassLayout.parseClass(UserItem.class).toPrintable());
     }
 }
