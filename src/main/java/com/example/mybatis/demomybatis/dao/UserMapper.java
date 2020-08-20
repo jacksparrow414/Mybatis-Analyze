@@ -14,4 +14,6 @@ public interface UserMapper {
     void addUser(UserEntity entity);
 
     UserEntity getUser();
+    
+    boolean updateUserById(Long id);
 }

@@ -27,6 +27,7 @@
         <mybatis.plus.version>3.1.0</mybatis.plus.version>
         <jedis.version>3.2.0</jedis.version>
         <jackson.version>2.10.2</jackson.version>
+        <jol.version>0.10</jol.version>
     </properties>
 
     <dependencies>
@@ -63,6 +64,12 @@
             <version>4.1.7.RELEASE</version>
         </dependency>
         <!--开发jar包-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
@@ -152,6 +159,13 @@
             <artifactId>jackson-annotations</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjdk.jol/jol-core -->
+        <dependency>
+            <groupId>org.openjdk.jol</groupId>
+            <artifactId>jol-core</artifactId>
+            <version>${jol.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

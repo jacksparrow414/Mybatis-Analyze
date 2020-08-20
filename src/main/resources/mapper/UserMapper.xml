@@ -5,6 +5,9 @@
     <insert id="addUser" parameterType="com.example.mybatis.demomybatis.entity.UserEntity">
         INSERT INTO user (id, name, age) values (#{id},#{name},#{age})
     </insert>
+    <update id="updateUserById">
+        update user set age = age -1 where name = 'dhb' and age > 0
+    </update>
     <select id="getUser" resultType="com.example.mybatis.demomybatis.entity.UserEntity">
         select * from user;
     </select>
