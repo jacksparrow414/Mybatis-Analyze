@@ -1,9 +1,6 @@
 package com.example.mybatis.demomybatis.jdbc.statement;
 
 import com.example.mybatis.demomybatis.jdbc.connection.MyConnection;
-import lombok.Getter;
-
-import javax.sql.DataSource;
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
@@ -26,6 +23,8 @@ import java.sql.SQLXML;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import javax.sql.DataSource;
+import lombok.Getter;
 
 /**
  * @author jacksparrow414
@@ -163,8 +162,15 @@ public class MyPreparedStatement implements PreparedStatement {
         Connection connection = dataSource.getConnection();
         // 真正获取preparedStatement的地方
         PreparedStatement preparedStatement = connection.prepareStatement(this.sql);
-        int update = preparedStatement.executeUpdate();
-        return update > 0;
+        ResultSet resultSet = preparedStatement.executeQuery();
+        boolean result = false;
+        while (resultSet.next()) {
+            System.out.println(resultSet.getInt(1));
+            System.out.println(resultSet.getString(2));
+            System.out.println(resultSet.getInt(3));
+            result = true;
+        }
+        return result;
     }
     
     @Override
