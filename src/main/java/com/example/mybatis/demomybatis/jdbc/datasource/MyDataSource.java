@@ -1,25 +1,44 @@
 package com.example.mybatis.demomybatis.jdbc.datasource;
 
+import com.example.mybatis.demomybatis.jdbc.connection.MyConnection;
+
+import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.util.Map;
 import java.util.logging.Logger;
-import javax.sql.DataSource;
 
 /**
  * @author jacksparrow414
  * @date 2020/9/6
  */
 public class MyDataSource implements DataSource {
-    @Override
-    public Connection getConnection() throws SQLException {
-        return null;
+    
+    /**
+     * 自定义dataSourceMap,里面放置了各种DataSource,如Druid,C3P0.
+     */
+    private final Map<String, DataSource> dataSourceMap;
+    
+    public MyDataSource(final Map<String, DataSource> dataSourceMap) {
+        this.dataSourceMap = dataSourceMap;
     }
     
+    /**
+     * 获取连接,仅仅返回一个MyConnection对象.
+     */
+    @Override
+    public Connection getConnection() throws SQLException {
+        return new MyConnection(dataSourceMap);
+    }
+    
+    /**
+     * 获取连接,仅仅返回一个MyConnection对象.
+     */
     @Override
     public Connection getConnection(final String username, final String password) throws SQLException {
-        return null;
+        return getConnection();
     }
     
     @Override

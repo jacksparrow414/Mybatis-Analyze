@@ -1,5 +1,9 @@
 package com.example.mybatis.demomybatis.jdbc.statement;
 
+import com.example.mybatis.demomybatis.jdbc.connection.MyConnection;
+import lombok.Getter;
+
+import javax.sql.DataSource;
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
@@ -27,7 +31,17 @@ import java.util.Calendar;
  * @author jacksparrow414
  * @date 2020/9/6
  */
+@Getter
 public class MyPreparedStatement implements PreparedStatement {
+    
+    private final MyConnection myConnection;
+    private final String sql;
+    
+    public MyPreparedStatement(final MyConnection myConnection, final String sql) {
+        this.myConnection = myConnection;
+        this.sql = sql;
+    }
+    
     @Override
     public ResultSet executeQuery() throws SQLException {
         return null;
@@ -138,9 +152,19 @@ public class MyPreparedStatement implements PreparedStatement {
     
     }
     
+    /**
+     * 真正执行获取Connection-连接、获取PreparedStatement并且执行的地方.
+     */
     @Override
     public boolean execute() throws SQLException {
-        return false;
+        // 获取具体数据源
+        DataSource dataSource = this.myConnection.getDataSourceMap().get("master");
+        // 获取具体数据源的connection
+        Connection connection = dataSource.getConnection();
+        // 真正获取preparedStatement的地方
+        PreparedStatement preparedStatement = connection.prepareStatement(this.sql);
+        int update = preparedStatement.executeUpdate();
+        return update > 0;
     }
     
     @Override

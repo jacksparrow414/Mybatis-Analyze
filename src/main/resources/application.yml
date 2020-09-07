@@ -4,25 +4,32 @@ spring:
   application:
     name: mybatis-demo
   datasource:
-    # sharding-proxy配置
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dhb?serverTimezone=UTC
+    username: root
+    password: 12345
+  shardingsphere:
+    enabled: false
+  # sharding-proxy配置
 #    url: jdbc:mysql://localhost:13306/sharding_db?serverTimezone=UTC
 #    username: sharding
 #    password: 123456
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 
     # sharding-jdbc配置
-  shardingsphere:
-    datasource:
-      # 数据库的别名
-      names: ds-0-1073741823,ds-1073741824-2147483647
-
-      # 主库1
-      ds-0-1073741823:
-        type: com.alibaba.druid.pool.DruidDataSource
-        driverClassName: com.mysql.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/demo_ds_0?serverTimezone=UTC
-        password: 12345
-        username: root
+#  shardingsphere:
+#    datasource:
+#      # 数据库的别名
+#      names: master0
+#
+#      # 主库1
+#      master0:
+#        type: com.alibaba.druid.pool.DruidDataSource
+#        driverClassName: com.mysql.jdbc.Driver
+#        url: jdbc:mysql://localhost:3306/dhb?serverTimezone=UTC
+#        password: 12345
+#        username: root
 #      # 主库1的从库1
 #      ds0-slave0:
 #        type: com.alibaba.druid.pool.DruidDataSource
@@ -39,15 +46,15 @@ spring:
 #        username: root
 #
       # 主库2
-      ds-1073741824-2147483647:
-        type: com.alibaba.druid.pool.DruidDataSource
-        driverClassName: com.mysql.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/demo_ds_1?serverTimezone=UTC
-        password: 12345
-        username: root
+#      master1:
+#        type: com.alibaba.druid.pool.DruidDataSource
+#        driverClassName: com.mysql.jdbc.Driver
+#        url: jdbc:mysql://localhost:3306/demo_ds_1?serverTimezone=UTC
+#        password: 12345
+#        username: root
 #
     # 数据分片配置---start
-    sharding:
+#    sharding:
 #      # 默认分库策略
 #      default-database-strategy:
 #        inline:
@@ -59,28 +66,28 @@ spring:
 #          sharding-column: age
 #          algorithm-expression: user_$->{age % 2}
       # 数据节点
-      tables:
-        sns_resource_basic:
-          actual-data-nodes: ds-0-1073741823.sns_resource_basic,ds-1073741824-2147483647.sns_resource_basic
-          databaseStrategy:
-            standard:
-              shardingColumn: res_id
-#              精度分片算法 配置
-              preciseAlgorithmClassName: com.example.mybatis.demomybatis.shardingsphere.algorithm.CustomPreciseShardingAlgorithm
-        sns_resource_essay:
-          actual-data-nodes: ds-0-1073741823.sns_resource_essay,ds-1073741824-2147483647.sns_resource_essay
-          databaseStrategy:
-            standard:
-              shardingColumn: res_id
-              preciseAlgorithmClassName: com.example.mybatis.demomybatis.shardingsphere.algorithm.CustomPreciseShardingAlgorithm
-        sns_resource_cache:
-          actual-data-nodes: ds-0-1073741823.sns_resource_cache,ds-1073741824-2147483647.sns_resource_cache
-          databaseStrategy:
-            standard:
-              shardingColumn: res_id
-              preciseAlgorithmClassName: com.example.mybatis.demomybatis.shardingsphere.algorithm.CustomPreciseShardingAlgorithm
-#      # 默认数据库
-#      default-data-source-name: ds0
+#      tables:
+#        sns_resource_basic:
+#          actual-data-nodes: ds-0-1073741823.sns_resource_basic,ds-1073741824-2147483647.sns_resource_basic
+#          databaseStrategy:
+#            standard:
+#              shardingColumn: res_id
+##              精度分片算法 配置
+#              preciseAlgorithmClassName: com.example.mybatis.demomybatis.shardingsphere.algorithm.CustomPreciseShardingAlgorithm
+#        sns_resource_essay:
+#          actual-data-nodes: ds-0-1073741823.sns_resource_essay,ds-1073741824-2147483647.sns_resource_essay
+#          databaseStrategy:
+#            standard:
+#              shardingColumn: res_id
+#              preciseAlgorithmClassName: com.example.mybatis.demomybatis.shardingsphere.algorithm.CustomPreciseShardingAlgorithm
+#        sns_resource_cache:
+#          actual-data-nodes: ds-0-1073741823.sns_resource_cache,ds-1073741824-2147483647.sns_resource_cache
+#          databaseStrategy:
+#            standard:
+#              shardingColumn: res_id
+#              preciseAlgorithmClassName: com.example.mybatis.demomybatis.shardingsphere.algorithm.CustomPreciseShardingAlgorithm
+      # 默认数据库
+#      default-data-source-name: master0
     # 数据分片配置---end
 #
 #
@@ -133,10 +140,13 @@ spring:
 #                  encryptor: encryptor_MD5
       # 数据脱敏规则配置---end
 
+
+
+
   #      broadcast-tables:
-    props:
-      # 打印SQL
-      sql.show: true
+#    props:
+#      # 打印SQL
+#      sql.show: true
 #      check:
 #        table:
 #          metadata: true
@@ -150,28 +160,18 @@ spring:
 
 
 
-  aop:
-    proxy-target-class: false
+#  aop:
+#    proxy-target-class: false
     # 因为Druid数据源和默认的数据源冲突，添加此配置
-  main:
-    allow-bean-definition-overriding: true
+#  main:
+#    allow-bean-definition-overriding: true
 
-mybatis-plus:
-  configuration:
-    map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    db-config:
-      logic-not-delete-value: 0
-      logic-delete-value: 1
-  mapper-locations: classpath:/mapper/*.xml
-  typeAliasesPackage: com.example.mybatis.demomybatis.entity
 ##以下配置是学习solr时的配置
 ##  data:
 ##    solr:
 ##      host: http://localhost:8983/solr
 #
-##以下配置是学习Mybatis时的配置
-##mybatis:
-##  config-location: classpath:mybatis-spring-config.xml
-##  mapper-locations: classpath:mapper/UserMapper.xml
+#以下配置是学习Mybatis时的配置
+mybatis:
+#  config-location: classpath:mybatis-spring-config.xml
+  mapper-locations: classpath:mapper/UserMapper.xml
