@@ -143,7 +143,7 @@ spring:
 
 
 
-  #      broadcast-tables:
+    #      broadcast-tables:
 #    props:
 #      # 打印SQL
 #      sql.show: true
@@ -163,8 +163,8 @@ spring:
 #  aop:
 #    proxy-target-class: false
     # 因为Druid数据源和默认的数据源冲突，添加此配置
-#  main:
-#    allow-bean-definition-overriding: true
+  main:
+    allow-bean-definition-overriding: true
 
 ##以下配置是学习solr时的配置
 ##  data:
@@ -174,4 +174,4 @@ spring:
 #以下配置是学习Mybatis时的配置
 mybatis:
 #  config-location: classpath:mybatis-spring-config.xml
-  mapper-locations: classpath:mapper/UserMapper.xml
+  mapper-locations: classpath:mapper/*.xml
