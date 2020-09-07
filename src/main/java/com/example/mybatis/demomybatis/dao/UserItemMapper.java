@@ -1,10 +1,10 @@
 package com.example.mybatis.demomybatis.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.mybatis.demomybatis.entity.UserItem;
-import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author jacksparrow414
@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
  * @description: TODO
  */
 @Mapper
-public interface UserItemMapper extends BaseMapper<UserItem> {
+public interface UserItemMapper  {
     
     /**
      * 根据年龄获取List

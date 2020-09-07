@@ -47,7 +47,7 @@ public class JedisPoolCustom {
             poolConfig.setMinEvictableIdleTimeMillis(1800000L);
             // 当池中没有可用连接时，是否阻塞等待
             poolConfig.setBlockWhenExhausted(true);
-            // 最大等待时间，如果是-1，则一直等待，知道池中有可用 连接为止
+            // 最大等待时间，如果是-1，则一直等待，直到池中有可用 连接为止
             poolConfig.setMaxWaitMillis(6000);
             JedisPoolCustom.jedisPool = new JedisPool(poolConfig,"localhost");
     }

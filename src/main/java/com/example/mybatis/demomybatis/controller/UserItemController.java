@@ -1,11 +1,7 @@
 package com.example.mybatis.demomybatis.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.IdWorker;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.example.mybatis.demomybatis.entity.UserItem;
 import com.example.mybatis.demomybatis.service.UserItemService;
-import java.util.List;
 import org.openjdk.jol.info.ClassLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author jacksparrow414
@@ -31,8 +30,6 @@ public class UserItemController {
     @Transactional(rollbackFor = Exception.class)
     @PostMapping(value = "saveItem")
     public String saveItem(@RequestBody UserItem userItem){
-        userItem.setId(IdWorker.getId());
-        itemService.save(userItem);
         return userItem.getId().toString();
 
     }
@@ -41,10 +38,7 @@ public class UserItemController {
     public List<UserItem> get(@RequestParam(required = false) Long id,
                         @RequestParam(required = false) Integer age,
                         @RequestParam(required = false) String name){
-       return itemService.list(new LambdaQueryWrapper<UserItem>()
-               .eq(id != null,UserItem::getId,id)
-               .eq(age != null,UserItem::getAge,age)
-               .eq(StringUtils.isNotEmpty(name),UserItem::getName,name));
+       return Collections.emptyList();
     }
     
     @GetMapping(value = "listByCondition")

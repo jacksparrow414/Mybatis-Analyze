@@ -1,5 +1,9 @@
 package com.example.mybatis.demomybatis.jdbc.connection;
 
+import com.example.mybatis.demomybatis.jdbc.statement.MyPreparedStatement;
+import lombok.Getter;
+
+import javax.sql.DataSource;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -23,7 +27,15 @@ import java.util.concurrent.Executor;
  * @author jacksparrow414
  * @date 2020/9/6
  */
+@Getter
 public class MyConnection implements Connection {
+    
+    private final Map<String, DataSource> dataSourceMap;
+    
+    public MyConnection(final Map<String, DataSource> dataSourceMap) {
+        this.dataSourceMap = dataSourceMap;
+    }
+    
     @Override
     public Statement createStatement() throws SQLException {
         return null;
@@ -31,7 +43,7 @@ public class MyConnection implements Connection {
     
     @Override
     public PreparedStatement prepareStatement(final String sql) throws SQLException {
-        return null;
+        return new MyPreparedStatement(this, sql);
     }
     
     @Override
