@@ -3,6 +3,8 @@ package com.example.mybatis.demomybatis.jdbc.statement;
 import com.example.mybatis.demomybatis.jdbc.connection.MyConnection;
 import java.io.InputStream;
 import java.io.Reader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Array;
@@ -22,7 +24,10 @@ import java.sql.SQLWarning;
 import java.sql.SQLXML;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.sql.DataSource;
 import lombok.Getter;
 
@@ -35,6 +40,8 @@ public class MyPreparedStatement implements PreparedStatement {
     
     private final MyConnection myConnection;
     private final String sql;
+    private ResultSet resultSet;
+    private final List<Object> parameters = new ArrayList<>();
     
     public MyPreparedStatement(final MyConnection myConnection, final String sql) {
         this.myConnection = myConnection;
@@ -73,7 +80,11 @@ public class MyPreparedStatement implements PreparedStatement {
     
     @Override
     public void setInt(final int parameterIndex, final int x) throws SQLException {
-    
+        // Mybatis TypeHandler处理的时候,现将参数存放在list中
+        
+        // list必须有值，才可以调用set方法
+        parameters.add(null);
+        parameters.set(parameterIndex - 1, x);
     }
     
     @Override
@@ -98,7 +109,8 @@ public class MyPreparedStatement implements PreparedStatement {
     
     @Override
     public void setString(final int parameterIndex, final String x) throws SQLException {
-    
+        parameters.add(null);
+        parameters.set(parameterIndex - 1, x);
     }
     
     @Override
@@ -162,15 +174,21 @@ public class MyPreparedStatement implements PreparedStatement {
         Connection connection = dataSource.getConnection();
         // 真正获取preparedStatement的地方
         PreparedStatement preparedStatement = connection.prepareStatement(this.sql);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        boolean result = false;
-        while (resultSet.next()) {
-            System.out.println(resultSet.getInt(1));
-            System.out.println(resultSet.getString(2));
-            System.out.println(resultSet.getInt(3));
-            result = true;
-        }
-        return result;
+        // 通过反射 调用 设置属性值
+        final AtomicInteger loop = new AtomicInteger(0);
+        parameters.forEach(item -> {
+            Method method = null;
+            try {
+                method = PreparedStatement.class.getMethod("setObject", int.class, Object.class);
+                method.invoke(preparedStatement, loop.get()+1, item);
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            loop.getAndIncrement();
+        });
+        preparedStatement.execute();
+        this.resultSet = preparedStatement.getResultSet();
+        return true;
     }
     
     @Override
@@ -410,7 +428,7 @@ public class MyPreparedStatement implements PreparedStatement {
     
     @Override
     public ResultSet getResultSet() throws SQLException {
-        return null;
+        return this.resultSet;
     }
     
     @Override

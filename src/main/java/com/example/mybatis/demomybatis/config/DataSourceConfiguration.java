@@ -11,11 +11,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.sql.DataSource;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.bind.BindResult;
+import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
+import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -26,7 +27,7 @@ import org.springframework.core.env.Environment;
  * <p>模仿ShardingSphere配置数据源的实现思路</p>
  *
  * <p>使用{@link org.springframework.boot.context.properties.bind.Binder}
- * 获取【配置文件具体属性】下的集合的值,需要注入Environment，也可以实现{@link org.springframework.context.EnvironmentAware}接口，
+ * 获取【配置文件具体属性】下的集合的值,需要注入Environment，通过实现{@link org.springframework.context.EnvironmentAware}接口，
  * 在具体方法里处理，这个方法会有environment。【可以获取具体的属性】</p>
  *
  * <p>Binder和{@link org.springframework.boot.context.properties.ConfigurationProperties}很类似，
@@ -34,10 +35,14 @@ import org.springframework.core.env.Environment;
  */
 @Configuration
 @AutoConfigureBefore(value = {DataSourceAutoConfiguration.class})
-public class DataSourceConfiguration {
+public class DataSourceConfiguration implements EnvironmentAware {
     
-    @Autowired
     private Environment environment;
+    
+    @Override
+    public void setEnvironment(final Environment environment) {
+        this.environment = environment;
+    }
     
     @Bean
     @SneakyThrows
@@ -69,8 +74,9 @@ public class DataSourceConfiguration {
     }
     
     private Map getDataSourcePropertyByPrefix(String prefix) {
+        // 利用Binder获取配置文件的信息
         Binder binder = Binder.get(environment);
-        BindResult<Map> bind = binder.bind(prefix, Map.class);
+        BindResult<Map> bind = binder.bind(prefix, Bindable.of(Map.class));
         return bind.get();
     }
 }

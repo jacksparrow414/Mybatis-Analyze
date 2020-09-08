@@ -4,6 +4,7 @@ import com.example.mybatis.demomybatis.dao.UserMapper;
 import com.example.mybatis.demomybatis.entity.UserEntity;
 import com.example.mybatis.demomybatis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +33,13 @@ public class UserController {
     }
     
     @RequestMapping(value = "query")
-    public void query() {
-        userMapper.getUser();
+    public UserEntity query() {
+        UserEntity user = userMapper.getUser();
+        return user;
+    }
+    
+    @RequestMapping(value = "insert")
+    public void insert(@RequestBody UserEntity userEntity) {
+        userMapper.addUser(userEntity);
     }
 }
