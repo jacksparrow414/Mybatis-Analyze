@@ -2,6 +2,7 @@ package com.example.mybatis.demomybatis.dao;
 
 import com.example.mybatis.demomybatis.entity.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author dhb
@@ -11,7 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
 
-    void addUser(UserEntity entity);
+    void addUser(@Param("entity") UserEntity entity);
 
     UserEntity getUser();
     
