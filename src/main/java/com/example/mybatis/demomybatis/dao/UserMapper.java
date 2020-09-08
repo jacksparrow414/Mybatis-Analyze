@@ -16,5 +16,5 @@ public interface UserMapper {
 
     UserEntity getUser();
     
-    boolean updateUserById(Long id);
+    boolean updateUserById(@Param("id") Integer id);
 }
