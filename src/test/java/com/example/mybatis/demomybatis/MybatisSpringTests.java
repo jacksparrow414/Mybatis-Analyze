@@ -28,7 +28,7 @@ public class MybatisSpringTests {
     
     @Test
     public void testMybatisUpdate(){
-        Long id = 1L;
+        int id = 1;
         // sql 语句默认的update语句返回的是match的值，只有0，1 如果要获得受影响行数，需要使用useAffectedRows
         System.out.println(userMapper.updateUserById(id));
     }
