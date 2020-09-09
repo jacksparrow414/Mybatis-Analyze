@@ -184,7 +184,7 @@ public class MyPreparedStatement implements PreparedStatement {
                 
                 // 第二种方式: 通过反射调用,也是调用preparedStatement.setObject
                // method = PreparedStatement.class.getMethod("setObject", int.class, Object.class);
-               // method.invoke(preparedStatement, loop.get()+1, item);
+                //method.invoke(preparedStatement, loop.get()+1, item);
                 // NoSuchMethodException | IllegalAccessException | InvocationTargetException |
             } catch ( SQLException e) {
                 e.printStackTrace();
@@ -192,7 +192,12 @@ public class MyPreparedStatement implements PreparedStatement {
             loop.getAndIncrement();
         });
         preparedStatement.execute();
-        this.resultSet = preparedStatement.getResultSet();
+        ResultSet statementResultSet = preparedStatement.getResultSet();
+        this.resultSet = statementResultSet;
+        // 关闭资源
+        statementResultSet.close();
+        preparedStatement.close();
+        connection.close();
         return true;
     }
     
