@@ -4,7 +4,6 @@ import com.example.mybatis.demomybatis.handler.CommonProxyHandler;
 import com.example.mybatis.demomybatis.service.ProxyService;
 import com.example.mybatis.demomybatis.service.impl.ProxyServiceImpl;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.Proxy;
 
@@ -13,8 +12,7 @@ import java.lang.reflect.Proxy;
  * @Date 2019-12-21
  * @Description: TODO
  */
-@SpringBootTest
-public class CommonProxyTest {
+public final class CommonProxyTest {
 
     @Test
     public void testCommonProxy(){
@@ -22,10 +20,10 @@ public class CommonProxyTest {
         ProxyService proxyService = new ProxyServiceImpl();
         // handler中传入目标接口的实例化的对象ProxyServiceImpl
         CommonProxyHandler commonProxyHandler = new CommonProxyHandler(proxyService,"testParams");
-        // 第一个参数:类加载器
+        // 第一个参数:类、接口 加载器
         // 第二个参数:被代理类要实现的目标接口
         // 第三个参数:handler的对象
-        // 返回:实现该接口的代理类
+        // 返回:实现该接口类的代理类
         ProxyService proxyInstance = (ProxyService) Proxy.newProxyInstance(ProxyServiceImpl.class.getClassLoader(),
                 proxyService.getClass().getInterfaces(), commonProxyHandler);
         String s = proxyInstance.print("我是一个小代理");
