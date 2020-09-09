@@ -1,9 +1,11 @@
 package com.example.mybatis.demomybatis.jdbc.statement;
 
 import com.example.mybatis.demomybatis.jdbc.connection.MyConnection;
+import lombok.Getter;
+
+import javax.sql.DataSource;
 import java.io.InputStream;
 import java.io.Reader;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -28,8 +30,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import javax.sql.DataSource;
-import lombok.Getter;
 
 /**
  * @author jacksparrow414
@@ -179,9 +179,14 @@ public class MyPreparedStatement implements PreparedStatement {
         parameters.forEach(item -> {
             Method method = null;
             try {
-                method = PreparedStatement.class.getMethod("setObject", int.class, Object.class);
-                method.invoke(preparedStatement, loop.get()+1, item);
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                // 第一种方式: 直接通过preparedStatement.setObject 设置参数值
+                preparedStatement.setObject(loop.get()+1, item);
+                
+                // 第二种方式: 通过反射调用,也是调用preparedStatement.setObject
+               // method = PreparedStatement.class.getMethod("setObject", int.class, Object.class);
+               // method.invoke(preparedStatement, loop.get()+1, item);
+                // NoSuchMethodException | IllegalAccessException | InvocationTargetException |
+            } catch ( SQLException e) {
                 e.printStackTrace();
             }
             loop.getAndIncrement();
