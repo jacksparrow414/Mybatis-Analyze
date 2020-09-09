@@ -12,12 +12,5 @@ public class ProxyServiceImpl implements ProxyService {
     public String print(String message) {
         return "我不是代理";
     }
-
-    public static void main(String[] args) {
-        StringBuilder a = new StringBuilder("uuiii,\n");
-        a.append("kkaalal,\n");
-        a.append("njjjjj,\n");
-
-        System.out.println(a.toString());
-    }
+    
 }
