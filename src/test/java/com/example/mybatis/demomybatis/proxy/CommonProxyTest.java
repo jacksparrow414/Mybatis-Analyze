@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.Proxy;
 
 /**
- * @Author jacksparrow414
- * @Date 2019-12-21
- * @Description: TODO
+ * 类的 动态代理测试.
  */
 public final class CommonProxyTest {
 

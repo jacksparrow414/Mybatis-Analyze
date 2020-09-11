@@ -1,22 +1,18 @@
-package com.example.mybatis.demomybatis;
+package com.example.mybatis.demomybatis.proxy;
 
 import com.example.mybatis.demomybatis.handler.ProxyHandler;
 import com.example.mybatis.demomybatis.service.SchoolService;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.Proxy;
 
 /**
- * @author jacksparrow414
- * @date 2020-03-10
- * @description: TODO
+ * 接口 的代理测试.
  */
-@SpringBootTest
-public class NoImplProxyTest {
+public final class NoImplProxyTest {
 
     @Test
-    public static void main(String[] args) {
+    public void assertNoImpl() {
         ProxyHandler proxyHandler = new ProxyHandler(SchoolService.class);
         SchoolService proxyInstance = (SchoolService) Proxy
                 .newProxyInstance(SchoolService.class.getClassLoader(),

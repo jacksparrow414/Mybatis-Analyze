@@ -2,24 +2,22 @@ package com.example.mybatis.demomybatis.proxy;
 
 import com.example.mybatis.demomybatis.handler.ProxyHandler;
 import com.example.mybatis.demomybatis.service.SchoolService;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import sun.misc.ProxyGenerator;
 
 import java.io.FileOutputStream;
 import java.lang.reflect.Proxy;
 
 /**
- * @author jacksparrow414
- * @date 2020-03-10
- * @description: TODO
+ * 测试生成 接口的 代理类.
  */
-@SpringBootTest
-public class GenreateProxyOnlyInterfaceTest {
+public final class GenerateProxyOnlyInterfaceTest {
 
+    @SneakyThrows
     @Test
-    public static void main(String[] args) throws Exception{
-        String path = "/Users/jacksparrow414/Downloads/$Proxy2.class";
+    public void assertInterfaceProxy() {
+        String path = "D:\\$Proxy2.class";
         ProxyHandler proxyHandler = new ProxyHandler(SchoolService.class);
         SchoolService proxyInstance = (SchoolService) Proxy
                 .newProxyInstance(SchoolService.class.getClassLoader(),
