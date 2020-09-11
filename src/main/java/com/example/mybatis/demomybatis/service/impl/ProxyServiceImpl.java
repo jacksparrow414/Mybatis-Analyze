@@ -13,4 +13,8 @@ public class ProxyServiceImpl implements ProxyService {
         return "我不是代理";
     }
     
+    public static String message(String message) {
+        return message;
+    }
+    
 }
