@@ -1,5 +1,6 @@
 package com.example.mybatis.demomybatis.handler;
 
+import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.InvocationHandler;
@@ -8,14 +9,11 @@ import java.lang.reflect.Method;
 /**
  * 可以用来接收接口的的Handler.
  */
+@AllArgsConstructor
 public class ProxyHandler<T> implements InvocationHandler {
 
-    private  Class<T> proxyInterface;
-
-    public ProxyHandler(Class<T> proxyInterface) {
-        this.proxyInterface = proxyInterface;
-    }
-
+    private Class<T> proxyInterface;
+    
     @Override
     @SneakyThrows
     public Object invoke(Object proxy, Method method, Object[] args) {
