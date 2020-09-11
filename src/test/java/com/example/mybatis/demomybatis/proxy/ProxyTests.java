@@ -7,9 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.Proxy;
 
 /**
- * @Author jacksparrow414
- * @Date 2019-11-30
- * @Description: 代理模式的测试
+ * 接口的动态代理测试.
  */
 public final class ProxyTests {
 

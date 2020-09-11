@@ -3,24 +3,22 @@ package com.example.mybatis.demomybatis.proxy;
 import com.example.mybatis.demomybatis.handler.CommonProxyHandler;
 import com.example.mybatis.demomybatis.service.ProxyService;
 import com.example.mybatis.demomybatis.service.impl.ProxyServiceImpl;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import sun.misc.ProxyGenerator;
 
 import java.io.FileOutputStream;
 import java.lang.reflect.Proxy;
 
 /**
- * @author jacksparrow414
- * @date 2020-03-10
- * @description: TODO
+ * 测试生成 类的 代理类.
  */
-@SpringBootTest
 public class GenerateProxyClassTest {
 
+    @SneakyThrows
     @Test
-    public static void main(String[] args) throws Exception{
-        String path = "/Users/jacksparrow414/Downloads/$Proxy1.class";
+    public  void assertGenerateProxyClass(){
+        String path = "D:\\$Proxy1.class";
         ProxyService proxyService = new ProxyServiceImpl();
         CommonProxyHandler commonProxyHandler = new CommonProxyHandler(proxyService,path);
         ProxyService proxyInstance = (ProxyService) Proxy.newProxyInstance(ProxyServiceImpl.class.getClassLoader(), ProxyServiceImpl.class.getInterfaces(), commonProxyHandler);
