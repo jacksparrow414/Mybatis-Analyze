@@ -1,9 +1,6 @@
 package com.example.mybatis.demomybatis.jdbc.statement;
 
 import com.example.mybatis.demomybatis.jdbc.connection.MyConnection;
-import lombok.Getter;
-
-import javax.sql.DataSource;
 import java.io.InputStream;
 import java.io.Reader;
 import java.lang.reflect.Method;
@@ -30,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.sql.DataSource;
+import lombok.Getter;
 
 /**
  * @author jacksparrow414
@@ -194,10 +193,10 @@ public class MyPreparedStatement implements PreparedStatement {
         preparedStatement.execute();
         ResultSet statementResultSet = preparedStatement.getResultSet();
         this.resultSet = statementResultSet;
-        // 关闭资源
-        statementResultSet.close();
-        preparedStatement.close();
-        connection.close();
+        // 不关闭资源，还有handler要拿下面的资源进行结果集的处理
+        //statementResultSet.close();
+        // preparedStatement.close();
+        //connection.close();
         return true;
     }
     
