@@ -1,5 +1,6 @@
 package com.example.mybatis.demomybatis.jdbc;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.example.mybatis.demomybatis.entity.Gener;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -87,5 +88,23 @@ public final class CommonJdbcTest {
         preparedStatement.close();
         connection.close();
         System.out.println(list.size());
+    }
+    
+    @SneakyThrows
+    @Test
+    public void assertOperationByDataSource() {
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setDriverClassName(DRIVER);
+        dataSource.setUrl(URL);
+        dataSource.setUsername(USER);
+        dataSource.setPassword(PASSWORD);
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("insert into gener(id,gener) values(?,?)");
+        preparedStatement.setInt(1, 233);
+        preparedStatement.setInt(2, 34);
+        assertThat(preparedStatement.executeUpdate(), is(1));
+        preparedStatement.close();
+        connection.close();
+        dataSource.close();
     }
 }
