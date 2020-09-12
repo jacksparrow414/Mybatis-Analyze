@@ -6,12 +6,11 @@
 2. Mybatis
 3. Spring
 4. Solr
-5. Mybatis-plus
-6. Redis
-7. Druid
-8. ShardingSphere
-9. Lombok
-10. HuTool
+5. Redis
+6. Druid
+7. ShardingSphere
+8. Lombok
+9. HuTool
 ## Mybatis原理研究项目
 ### 项目说明
 1. 主要作为Mybatis原理的研究项目，其中对Mybatis的动态代理，以及JDK动态代理提供了详细的例子
