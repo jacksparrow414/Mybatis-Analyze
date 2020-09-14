@@ -12,6 +12,8 @@ import java.lang.reflect.Proxy;
 
 /**
  * 测试生成 类的 代理类.
+ *
+ * <p><也可以直接参考根目录下的$Proxy1.class文件<p/>
  */
 public class GenerateProxyClassTest {
 

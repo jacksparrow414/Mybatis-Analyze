@@ -21,9 +21,10 @@ public class CommonProxyHandler implements InvocationHandler {
     
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        // return "hhhhh";
+        System.out.println("已经进入代理方法");
         String s = StringUtils.upperCase(name);
         System.out.println(s);
+        // 如果这里入参写的是proxy而不是target,则变成了自己invoke再invoke里调用自己
         // 调用invoke方法基本都要有一个target，除非是static，这个target是在handler构造方法初始化的
         Object invoke = method.invoke(target, args);
         System.out.println("目标方法执行完毕");
