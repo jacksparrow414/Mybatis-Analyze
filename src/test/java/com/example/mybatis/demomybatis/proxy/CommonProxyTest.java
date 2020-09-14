@@ -24,6 +24,7 @@ public final class CommonProxyTest {
         // 返回:实现该接口类的代理类
         ProxyService proxyInstance = (ProxyService) Proxy.newProxyInstance(ProxyServiceImpl.class.getClassLoader(),
                 proxyService.getClass().getInterfaces(), commonProxyHandler);
+        // 调用的其实是代理类中print方法，方法里会调用super.h.invoke。h-就是commonProxyHandler
         String s = proxyInstance.print("我是一个小代理");
         System.out.println(s);
     }
