@@ -9,20 +9,16 @@ import lombok.Data;
  * @description: TODO
  */
 @Data
-//@TableName(value = "user")
 @Builder
 public class UserItem {
-  //  @TableId
     private Long id;
     private String name;
     private Integer age;
     private Integer del;
-   // @TableField(exist = false)
     private String sameData;
     
     /**
      * 为了测试shardingsphere的逻辑列和密文列的对应关系
      */
-    //@TableField(value = "other_info",exist = false)
     private String info;
 }
