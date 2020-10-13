@@ -1,11 +1,14 @@
 package com.example.mybatis.demomybatis.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.*;
 
 /**
  * @author jacksparrow414
@@ -57,9 +60,9 @@ public class ReadFileController {
             byte[] bytes1 = IOUtils.toByteArray(inputStream);
 //     IOUtils.copy(inputStream,fileOutputStream);
             // 按照上述规则应该不会出现内存溢出的情况啊，因为用作缓冲的bytes一般也就几M，怎么会出现那内存溢出呢？
-//            while (-1 != (n=inputStream.read(bytes))){
-//                 fileOutputStream.write(bytes,0,n);
-//             }
+            while (-1 != (n=inputStream.read(bytes))){
+                 fileOutputStream.write(bytes,0,n);
+             }
              return true;
         } catch (IOException e) {
             e.printStackTrace();
