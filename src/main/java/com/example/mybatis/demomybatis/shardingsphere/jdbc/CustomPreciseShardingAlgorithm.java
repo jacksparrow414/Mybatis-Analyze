@@ -7,7 +7,7 @@ import org.apache.shardingsphere.api.sharding.standard.PreciseShardingValue;
 import java.util.Collection;
 
 /**
- * @author duhongbo
+ * @author jacksparrow414
  * @date 2020/8/20 15:42
  */
 @NoArgsConstructor

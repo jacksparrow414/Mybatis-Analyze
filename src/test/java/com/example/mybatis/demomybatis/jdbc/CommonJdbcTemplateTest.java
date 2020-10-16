@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
- * @author duhongbo
+ * @author jacksparrow414
  * @date 2020/9/9 17:27
  */
 public final class CommonJdbcTemplateTest {
