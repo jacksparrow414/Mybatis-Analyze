@@ -16,6 +16,9 @@ public final class CommonThreadExtThreadTest {
         threadEntity = new ThreadEntity();
     }
     
+    /**
+     * 模拟线程并发
+     */
     @Test
     public void assertThreadConcurrency() {
         (new CommonThreadExtThread(threadEntity)).start();

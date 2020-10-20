@@ -16,6 +16,10 @@ public final class CommonThreadImplRunnableTest {
     public void setUp() {
         commonThreadImplRunnable = new CommonThreadImplRunnable();
     }
+    
+    /**
+     * 模拟线程并发
+     */
     @Test
     public void assertThreadConcurrency() {
         (new Thread(commonThreadImplRunnable)).start();

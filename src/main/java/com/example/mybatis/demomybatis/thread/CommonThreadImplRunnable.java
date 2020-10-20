@@ -36,6 +36,8 @@ public class CommonThreadImplRunnable implements Runnable{
                     // 线程休眠，模拟CPU切换造成的异常
                     Thread.sleep(RandomUtil.randomInt(0, 50));
                     System.out.println(Thread.currentThread().getName() + ":" + tmp++);
+                }else {
+                    System.out.println("我是大于10的情况");
                 }
             }
         }
