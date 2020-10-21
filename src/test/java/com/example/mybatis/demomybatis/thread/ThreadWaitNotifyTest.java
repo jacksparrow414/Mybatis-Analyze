@@ -5,6 +5,14 @@ import lombok.SneakyThrows;
 import org.junit.Test;
 
 /**
+ * 线程的wait/notify机制.
+ *
+ * 对象.wait()、对象.notify()等操作前提是已经获得了锁。也就是这些方法要在【同步体里执行】
+ *
+ * synchronized(object) {
+ *     object.wait();/object.wait(long timeout)/object.notify();/object.notifyAll();
+ * }
+ *
  * @author jacksparrow414
  * @date 2020/10/20
  */
@@ -53,11 +61,13 @@ public final class ThreadWaitNotifyTest {
                 
                 try {
                     TimeUnit.SECONDS.sleep(3);
+                    lock.notifyAll();
                 } catch (InterruptedException exception) {
                     exception.printStackTrace();
                 }
             }
-            lock.notifyAll();
+            // 唤醒等待线程的操作要放到同步体里，否则会报错
+            // lock.notifyAll();
             synchronized (lock) {
                 System.out.println(Thread.currentThread().getName() + " acquire again");
             }
