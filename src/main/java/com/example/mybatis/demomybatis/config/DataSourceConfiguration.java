@@ -11,14 +11,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.sql.DataSource;
 import lombok.SneakyThrows;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 /**
@@ -33,8 +30,8 @@ import org.springframework.core.env.Environment;
  * <p>Binder和{@link org.springframework.boot.context.properties.ConfigurationProperties}很类似，
  * 不过binder用的情况基本是我们自己手动处理【配置文件】的参数绑定</p>
  */
-@Configuration
-@AutoConfigureBefore(value = {DataSourceAutoConfiguration.class})
+//@Configuration
+//@AutoConfigureBefore(value = {DataSourceAutoConfiguration.class})
 public class DataSourceConfiguration implements EnvironmentAware {
     
     private Environment environment;

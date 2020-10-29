@@ -2,14 +2,15 @@ package com.example.mybatis.demomybatis.entity;
 
 import com.example.mybatis.demomybatis.annotation.AddCheck;
 import com.example.mybatis.demomybatis.annotation.UpdateCheck;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import javax.validation.constraints.NotNull;
+import lombok.Builder;
 
 /**
  * @author dhb
  * @date 2019/11/14 9:41
  */
+@Builder
 public class UserEntity implements Serializable {
     @NotNull(groups = UpdateCheck.class)
     private Integer id;

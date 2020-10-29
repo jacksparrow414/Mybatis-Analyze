@@ -11,10 +11,23 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface UserMapper {
-
+    
+    /**
+     * 添加User
+     * @param entity entity
+     */
     void addUser(@Param("entity") UserEntity entity);
-
+    
+    /**
+     * 查询User
+     * @return userEntity
+     */
     UserEntity getUser();
     
+    /**
+     * 根据ID更新
+     * @param id userId
+     * @return boolean
+     */
     boolean updateUserById(@Param("id") Integer id);
 }
