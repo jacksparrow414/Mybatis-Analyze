@@ -19,7 +19,7 @@ public class MybatisSpringTests {
     UserMapper userMapper;
     @Test
     public void testMybatisSpring(){
-        UserEntity userEntity = new UserEntity();
+        UserEntity userEntity = UserEntity.builder().build();
         userEntity.setId(8);
         userEntity.setName("kkl");
         userEntity.setAge(45);

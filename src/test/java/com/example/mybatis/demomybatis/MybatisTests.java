@@ -2,15 +2,14 @@ package com.example.mybatis.demomybatis;
 
 import com.example.mybatis.demomybatis.dao.UserMapper;
 import com.example.mybatis.demomybatis.entity.UserEntity;
+import java.io.IOException;
+import java.io.InputStream;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author dhb
@@ -35,7 +34,7 @@ public class MybatisTests {
         // 具体可参考MapperRegistry.getMapper()方法即可，里面就是一个new了一个Mapper接口的动态代理对象 MapperProxy
         SqlSessionFactory factory = builder.build(inputStream);
         SqlSession sqlSession = factory.openSession();
-        UserEntity entity = new UserEntity();
+        UserEntity entity = UserEntity.builder().build();
         entity.setAge(77);
         entity.setName("op7");
         entity.setId(7);

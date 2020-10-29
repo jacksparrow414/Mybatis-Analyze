@@ -19,17 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
     
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
     
     @RequestMapping(value = "testTransactional")
     public void testTransactional(){
-        UserEntity entity = new UserEntity();
-        entity.setId(13);
-        entity.setName("jjhs");
-        entity.setAge(13);
+        UserEntity entity = UserEntity.builder().id(13).age(13).name("sparrow").build();
         userService.addUser(entity);
     }
     

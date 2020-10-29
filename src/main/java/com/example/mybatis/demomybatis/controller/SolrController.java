@@ -31,7 +31,7 @@ public class SolrController {
                 .userId("238938212")
                 .name("testTransaction")
                 .age(122L).build();
-        UserEntity userEntity = new UserEntity();
+        UserEntity userEntity = UserEntity.builder().build();
         BeanUtils.copyProperties(springUserEntity,userEntity);
         userEntity.setId(123456);
         userEntity.setAge(12);
