@@ -6,7 +6,7 @@ package com.example.mybatis.demomybatis.shardingsphere.jdbc;
  * 参考链接：
  * <a href="http://www.r9it.com/20190729/sharding-jdbc-03.html"/>
  * <a href="https://www.cnblogs.com/rinack/p/11241111.html"/>
- * @author duhongbo
+ * @author jacksparrow414
  * @date 2020/5/26 10:37
  */
 //@Slf4j

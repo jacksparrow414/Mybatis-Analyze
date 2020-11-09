@@ -7,7 +7,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
- * @author duhongbo
+ * @author jacksparrow414
  * @date 2020/5/14 10:03
  */
 @Configuration
@@ -25,7 +25,7 @@ public class JedisPoolCustom {
 
     /**
      * 初始化JedisPool
-     * @author duhongbo
+     * @author jacksparrow414
      * @param jedisPool
      * @return void
      */
