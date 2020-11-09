@@ -11,7 +11,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 /**
- * @author duhongbo
+ * @author jacksparrow414
  * @date 2020/5/14 11:24
  */
 @SpringBootTest
@@ -32,7 +32,7 @@ public class JedisTests {
         Jedis jedis = jedisPool.getResource();
         // 切换库
         jedis.select(3);
-        jedis.setnx("duhongbo","杜泓波");
+        jedis.setnx("jacksparrow414","杜泓波");
         jedis.close();
     }
 
@@ -51,7 +51,7 @@ public class JedisTests {
     void testDel(){
         Jedis jedis = jedisPool.getResource();
         jedis.select(3);
-        Long result = jedis.del("duhongbo");
+        Long result = jedis.del("jacksparrow414");
         if (0L == result) {
             System.out.println("如果删除不存在的key,则返回0");
         }
