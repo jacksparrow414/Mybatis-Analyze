@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author jacksparrow414
  * @date 2020-05-03
- * @description: TODO
+ * @description: TODO 传入自定义参数、能否动态组装？
  */
 
 public interface SolrSpringService extends CrudRepository<SolrSpringUserEntity,String>,
