@@ -10,7 +10,7 @@ import java.util.function.BiConsumer;
  */
 public class ConsumerExample {
 
-    public  void setValueToClass(Gener gener,BiConsumer<Gener, Integer> biConsumer) {
+    public void setValueToClass(Gener gener,BiConsumer<Gener, Integer> biConsumer) {
         biConsumer.accept(gener, 51);
     }
 }
