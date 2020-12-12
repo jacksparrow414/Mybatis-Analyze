@@ -167,9 +167,13 @@ spring:
     allow-bean-definition-overriding: true
 
 ##以下配置是学习solr时的配置
-##  data:
-##    solr:
-##      host: http://localhost:8983/solr
+  data:
+    solr:
+      host: http://localhost:8983/solr
+# 开启debug日志，可以清楚的在控制台看到执行的solr语句
+logging:
+  level:
+    org.springframework.data: debug
 #
 #以下配置是学习Mybatis时的配置
 mybatis:

@@ -1,6 +1,8 @@
 package com.example.mybatis.demomybatis.solr;
 
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.solr.core.SolrTemplate;
@@ -13,12 +15,15 @@ import org.springframework.data.solr.core.SolrTemplate;
 @Configuration
 public class SolrTemplateConfig {
 
-    private String solrUrl = "http://localhost:8983/solr";
+    @Value("${spring.data.solr.host}")
+    private String solrUrl;
+    
+    @Bean
+    public SolrClient solrClient() {
+        return new HttpSolrClient.Builder().withBaseSolrUrl(solrUrl).build();
+    }
     @Bean
     public SolrTemplate solrTemplate(){
-        return new SolrTemplate(new HttpSolrClient.Builder()
-                .withBaseSolrUrl(solrUrl)
-                .withConnectionTimeout(10000)
-                .withSocketTimeout(6000).build());
+        return new SolrTemplate(solrClient());
     }
 }
