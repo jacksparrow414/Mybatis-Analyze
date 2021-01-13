@@ -1,6 +1,6 @@
 package com.example.mybatis.demomybatis.service.impl;
 
-import com.example.mybatis.demomybatis.config.DataSourceConfiguration;
+import com.example.mybatis.demomybatis.config.CustomDataSourceConfiguration;
 import com.example.mybatis.demomybatis.dao.UserMapper;
 import com.example.mybatis.demomybatis.entity.UserEntity;
 import com.example.mybatis.demomybatis.service.UserService;
@@ -8,10 +8,17 @@ import com.example.mybatis.demomybatis.service.UserTransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+
+import javax.annotation.Resource;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * 测试事务注解时把模仿的自定义的ShardingSphereDatasource配置类{@link DataSourceConfiguration}先注释掉
+ * 测试事务注解时把模仿的自定义的ShardingSphereDatasource配置类{@link CustomDataSourceConfiguration}先注释掉
  *
  * @Author jacksparrow414
  * @Date 2019-11-27
@@ -26,6 +33,12 @@ public class UserServiceImpl implements UserService {
     
     @Autowired
     private UserTransactionService userTransactionService;
+
+    @Resource(name = "transactionManager")
+    private PlatformTransactionManager transactionManager;
+
+    @Resource(name = "threadPoolExecutor")
+    private ThreadPoolExecutor threadPoolTaskExecutor;
     
     /**
      * 这种方式,最外层的方法加上事务注解，即使下面的里面的嵌套方法不加注解，异常出现，两个事务都可以回滚成功
@@ -57,5 +70,39 @@ public class UserServiceImpl implements UserService {
         UserEntity entity = UserEntity.builder().id(12).age(12).name("jack").build();
         userMapper.addUser(entity);
         int a = 1/0;
+    }
+
+
+    @Override
+    public boolean asyncThreadTransaction() {
+        // 手动回滚事务
+        threadPoolTaskExecutor.execute(() -> {
+            UserEntity wrong = UserEntity.builder().id(113).age(2021).name("异步线程事务").build();
+            TransactionDefinition transactionDefinition = new DefaultTransactionDefinition(TransactionDefinition.PROPAGATION_REQUIRED);
+            TransactionStatus transaction = transactionManager.getTransaction(transactionDefinition);
+            try {
+                userMapper.addUser(wrong);
+                int a = 1/0;
+                transactionManager.commit(transaction);
+            }catch (Exception e){
+                log.error("发生报错，回滚事务", e);
+                transactionManager.rollback(transaction);
+            }
+        });
+
+        // 执行正确，手动提交
+        threadPoolTaskExecutor.execute(() -> {
+            UserEntity correct = UserEntity.builder().id(114).age(2020).name("正常线程事务").build();
+            TransactionDefinition transactionDefinition = new DefaultTransactionDefinition(TransactionDefinition.PROPAGATION_REQUIRED);
+            TransactionStatus transaction = transactionManager.getTransaction(transactionDefinition);
+            try {
+                userMapper.addUser(correct);
+                transactionManager.commit(transaction);
+            }catch (Exception e){
+                log.error("发生报错，回滚事务", e);
+                transactionManager.rollback(transaction);
+            }
+        });
+        return false;
     }
 }

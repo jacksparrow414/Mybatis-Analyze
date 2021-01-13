@@ -7,5 +7,14 @@ import com.example.mybatis.demomybatis.entity.UserEntity;
  */
 public interface UserService {
 
+    /**
+     * 添加用户.
+     * @param entity user实体
+     */
     void addUser(UserEntity entity);
+
+    /**
+     * 在异步线程中使用事务.
+     */
+    boolean asyncThreadTransaction();
 }
