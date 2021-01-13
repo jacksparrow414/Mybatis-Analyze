@@ -10,11 +10,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * 使用CompletableFuture处理{@link FutureUsExampleTest}说的情况
+ * 使用CompletableFuture处理{@link FutureUsExampleTest}说的情况，
+ * CompletableFuture还是异步的，如果想要执行完子线程再执行主线程，则可以CompletableFuture.join()
  * @author jacksparrow414
  * @date 2020/11/9 13:51
  */
@@ -64,5 +66,21 @@ public final class CompletableFutureUseExampleTest {
                 .thenAccept(System.out::println);
         CompletableFuture.allOf(completableFuture1, completableFuture2, completableFuture4)
                 .whenComplete((r,e) -> System.out.println(" 前面三个都异步线程都组合完毕"));
+    }
+
+    @Test
+    public void assertNoResultFuture() {
+        CompletableFuture<Void> voidCompletableFutureFirst = CompletableFuture.runAsync(() -> {
+            System.out.println(Thread.currentThread().getName());
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }, threadPoolExecutor);
+        CompletableFuture<Void> voidCompletableFutureSecond = CompletableFuture.runAsync(() -> System.out.println(Thread.currentThread().getName()), threadPoolExecutor);
+        // 子线程执行完毕, 再执行主线程
+        CompletableFuture.allOf(voidCompletableFutureSecond, voidCompletableFutureFirst).join();
+        System.out.println("主线程");
     }
 }
