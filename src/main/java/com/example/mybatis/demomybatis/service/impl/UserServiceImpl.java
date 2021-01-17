@@ -5,6 +5,8 @@ import com.example.mybatis.demomybatis.dao.UserMapper;
 import com.example.mybatis.demomybatis.entity.UserEntity;
 import com.example.mybatis.demomybatis.service.UserService;
 import com.example.mybatis.demomybatis.service.UserTransactionService;
+import java.util.concurrent.ThreadPoolExecutor;
+import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,12 +15,12 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-
-import javax.annotation.Resource;
-import java.util.concurrent.ThreadPoolExecutor;
+import org.springframework.transaction.support.TransactionTemplate;
 
 /**
  * 测试事务注解时把模仿的自定义的ShardingSphereDatasource配置类{@link CustomDataSourceConfiguration}先注释掉
+ *
+ * 在异步线程中控制事务可以使用transactionManager和transactionTemplate两种方式
  *
  * @Author jacksparrow414
  * @Date 2019-11-27
@@ -39,6 +41,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource(name = "threadPoolExecutor")
     private ThreadPoolExecutor threadPoolTaskExecutor;
+    
+    @Resource(name = "transactionTemplate")
+    private TransactionTemplate transactionTemplate;
     
     /**
      * 这种方式,最外层的方法加上事务注解，即使下面的里面的嵌套方法不加注解，异常出现，两个事务都可以回滚成功
@@ -102,6 +107,29 @@ public class UserServiceImpl implements UserService {
                 log.error("发生报错，回滚事务", e);
                 transactionManager.rollback(transaction);
             }
+        });
+        return false;
+    }
+    
+    @Override
+    public boolean asyncThreadTransactionTemplate() {
+        // transactionTemplate执行错误时自动回滚事务
+        threadPoolTaskExecutor.execute(() -> {
+            transactionTemplate.execute(transactionStatus -> {
+                UserEntity wrong = UserEntity.builder().id(115).name("template异常事务").age(2019).build();
+                 userMapper.addUser(wrong);
+                 int tmp = 1/0;
+                 return true;
+            });
+        });
+        
+        // transactionTemplate正常执行
+        threadPoolTaskExecutor.execute(() -> {
+            transactionTemplate.execute(transactionStatus -> {
+                UserEntity correct = UserEntity.builder().id(116).name("template正常执行").age(2018).build();
+                userMapper.addUser(correct);
+                return true;
+            });
         });
         return false;
     }

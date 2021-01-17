@@ -17,4 +17,9 @@ public interface UserService {
      * 在异步线程中使用事务.
      */
     boolean asyncThreadTransaction();
+    
+    /**
+     * 在异步线程中使用TransactionTemplate.
+     */
+    boolean asyncThreadTransactionTemplate();
 }
