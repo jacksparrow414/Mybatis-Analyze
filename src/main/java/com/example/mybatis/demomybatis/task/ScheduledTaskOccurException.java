@@ -2,7 +2,6 @@ package com.example.mybatis.demomybatis.task;
 
 import lombok.SneakyThrows;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 @EnableScheduling
 public class ScheduledTaskOccurException {
     
-    @Scheduled(fixedDelay = 5000)
+    // @Scheduled(fixedDelay = 5000)
     @SneakyThrows
     public void taskOccurException() {
         Thread.sleep(10000);
