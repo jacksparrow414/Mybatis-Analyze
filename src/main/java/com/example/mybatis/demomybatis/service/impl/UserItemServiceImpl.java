@@ -12,7 +12,6 @@ import java.util.List;
  * serviceImpl.
  * @author jacksparrow414
  * @date 2020-05-24
- * @description: TODO
  */
 @Service
 public class UserItemServiceImpl  implements UserItemService {

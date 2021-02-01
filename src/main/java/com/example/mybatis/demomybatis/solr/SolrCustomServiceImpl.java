@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 /**
  * @author jacksparrow414
  * @date 2020-05-04
- * @description: TODO
  */
 @Service
 public class SolrCustomServiceImpl implements SolrCustomService{

@@ -10,7 +10,6 @@ import org.springframework.data.solr.core.SolrTemplate;
 /**
  * @author jacksparrow414
  * @date 2020-05-04
- * @description: TODO
  */
 @Configuration
 public class SolrTemplateConfig {
