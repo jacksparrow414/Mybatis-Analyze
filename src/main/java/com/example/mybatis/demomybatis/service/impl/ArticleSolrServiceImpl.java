@@ -1,6 +1,6 @@
 package com.example.mybatis.demomybatis.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.example.mybatis.demomybatis.dto.QuerySolrParamDto;
@@ -8,8 +8,6 @@ import com.example.mybatis.demomybatis.entity.ArticleSolrEntity;
 import com.example.mybatis.demomybatis.service.ArticleSolrService;
 import com.example.mybatis.demomybatis.solr.extend.SearchableArticleSolrDefinition;
 import com.google.common.base.Preconditions;
-import java.util.Collection;
-import java.util.List;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,14 +15,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.SolrTemplate;
-import org.springframework.data.solr.core.query.Criteria;
-import org.springframework.data.solr.core.query.FilterQuery;
-import org.springframework.data.solr.core.query.Query;
-import org.springframework.data.solr.core.query.SimpleFilterQuery;
-import org.springframework.data.solr.core.query.SimpleQuery;
-import org.springframework.data.solr.core.query.SimpleStringCriteria;
+import org.springframework.data.solr.core.query.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 注意：类名必须以Impl结尾.见<a href="https://docs.spring.io/spring-data/solr/docs/current/reference/html/#repositories.single-repository-behavior">官方文档</a>
@@ -33,24 +29,26 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class ArticleSolrServiceImpl implements ArticleSolrService {
-    
+
+    private static final String ARTICLE_CORE_NAME = "article";
+
     @Autowired
     private SolrTemplate solrTemplate;
     
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean deleteSolrDataByIds(final Collection<String> ids) {
-        Preconditions.checkArgument(CollectionUtil.isNotEmpty(ids), "collection must not be null");
-        UpdateResponse response = solrTemplate.deleteByIds("article", ids);
+        Preconditions.checkArgument(CollUtil.isNotEmpty(ids), "collection must not be null");
+        UpdateResponse response = solrTemplate.deleteByIds(ARTICLE_CORE_NAME, ids);
         // 记得提交，否则不会生效
-        solrTemplate.commit("article");
+        solrTemplate.commit(ARTICLE_CORE_NAME);
         return response.getStatus() == 0;
     }
     
     @Override
     public List<ArticleSolrEntity> queryDataByParams(final QuerySolrParamDto querySolrParamDto) {
         Query simpleQuery = buildSimpleQuery(querySolrParamDto);
-        Page<ArticleSolrEntity> articles = solrTemplate.queryForPage("article", simpleQuery, ArticleSolrEntity.class);
+        Page<ArticleSolrEntity> articles = solrTemplate.queryForPage(ARTICLE_CORE_NAME, simpleQuery, ArticleSolrEntity.class);
         return articles.getContent();
     }
     
@@ -84,7 +82,7 @@ public class ArticleSolrServiceImpl implements ArticleSolrService {
             criteria.contains(querySolrParamDto.getAuthorName());
             result.addFilterQuery(buildSimpleFilterQuery(criteria));
         }
-        if (CollectionUtil.isNotEmpty(querySolrParamDto.getSubjectId())) {
+        if (CollUtil.isNotEmpty(querySolrParamDto.getSubjectId())) {
             Criteria criteria = new Criteria(SearchableArticleSolrDefinition.SUBJECT_ID_FIELD);
             criteria.in(querySolrParamDto.getSubjectId());
             result.addFilterQuery(buildSimpleFilterQuery(criteria));

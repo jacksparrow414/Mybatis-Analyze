@@ -1,6 +1,6 @@
 package com.example.mybatis.demomybatis.config;
 
-import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.collection.CollUtil;
 import com.example.mybatis.demomybatis.jdbc.datasource.MyDataSource;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Preconditions;
@@ -46,7 +46,7 @@ public class CustomDataSourceConfiguration implements EnvironmentAware {
     @SneakyThrows
     public DataSource createDataSource() {
         Map<String, Object> property = getDataSourcePropertyByPrefix("spring.datasource");
-        Preconditions.checkState(CollectionUtil.isNotEmpty(property));
+        Preconditions.checkState(CollUtil.isNotEmpty(property));
         Map<String, DataSource> dataSourceMap = new HashMap<>(1);
         DataSource dataSource = (DataSource) Class.forName(property.get("type").toString()).newInstance();
         property.remove("type");

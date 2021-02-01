@@ -18,7 +18,7 @@ public class JedisPoolCustom {
     @Bean
     public JedisPool customJedisPool(){
         if (ObjectUtil.isNull(jedisPool)){
-            this.initJedisPool(jedisPool);
+            JedisPoolCustom.initJedisPool();
         }
         return jedisPool;
     }
@@ -26,10 +26,9 @@ public class JedisPoolCustom {
     /**
      * 初始化JedisPool
      * @author jacksparrow414
-     * @param jedisPool
      * @return void
      */
-    private void initJedisPool(JedisPool jedisPool){
+    private static void initJedisPool(){
             JedisPoolConfig poolConfig = new JedisPoolConfig();
             // 总对象 最大数量-默认值8-负数为没有限制
             poolConfig.setMaxTotal(8);
