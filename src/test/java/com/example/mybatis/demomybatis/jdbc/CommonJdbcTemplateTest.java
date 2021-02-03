@@ -52,13 +52,48 @@ public final class CommonJdbcTemplateTest {
      */
     @Test
     public void assertJdbcTemplateQuery() {
-        List<UserEntity> userEntities = jdbcTemplate.query("select * from user", (resultSet, i) -> {
+        List<UserEntity> actual = jdbcTemplate.query("select * from user", (resultSet, i) -> {
                 UserEntity entity = UserEntity.builder().build();
                 entity.setId(resultSet.getInt(1));
                 entity.setName(resultSet.getString(2));
                 entity.setAge(resultSet.getInt(3));
                 return entity;
         });
-        assertTrue(CollUtil.isNotEmpty(userEntities));
+        assertTrue(CollUtil.isNotEmpty(actual));
+    }
+
+    /**
+     * 在查询的时候使用PreparedStatement进行预编译.
+     * 使用PreparedStatementSetter进行设值操作.无返回值
+     */
+    @Test
+    public void assertJdbcTemplateQueryWithPreparedStatement() {
+        List<UserEntity> actual = jdbcTemplate.query("select * from user where age = ?", preparedStatement -> preparedStatement.setInt(1, 2020), (resultSet, i) -> {
+            UserEntity entity = UserEntity.builder().build();
+            entity.setId(resultSet.getInt(1));
+            entity.setName(resultSet.getString(2));
+            entity.setAge(resultSet.getInt(3));
+            return entity;
+        });
+        assertTrue((CollUtil.isNotEmpty(actual)));
+    }
+
+    @Test
+    public void assertJdbcTemplateUpdate() {
+        Integer actual = jdbcTemplate.execute("update user set name = ? where id = ?", (PreparedStatementCallback<Integer>) preparedStatement -> {
+            preparedStatement.setString(1, "modifyName");
+            preparedStatement.setInt(2, 19);
+            return preparedStatement.executeUpdate();
+        });
+        assertThat(actual, Is.is(1));
+    }
+
+    @Test
+    public void assertJdbcTemplateDeleteWithPreparedStatement() {
+        Integer actual = jdbcTemplate.execute("delete from user where id = ?", (PreparedStatementCallback<Integer>) preparedStatement -> {
+            preparedStatement.setInt(1, 114);
+            return preparedStatement.executeUpdate();
+        });
+        assertThat(actual, Is.is(1));
     }
 }
