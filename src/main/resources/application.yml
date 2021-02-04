@@ -179,3 +179,8 @@ logging:
 mybatis:
 #  config-location: classpath:mybatis-spring-config.xml
   mapper-locations: classpath:mapper/*.xml
+
+#  测试自定义自动配置类
+#my-app:
+#  info: "kko"
+#  enabled: true
