@@ -1,5 +1,6 @@
 package com.example.mybatis.demomybatis.thread;
 
+import lombok.SneakyThrows;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -16,13 +17,14 @@ import static org.junit.Assert.assertThat;
 public final class ThreadConcurrencyTest {
     
     @Test
+    @SneakyThrows
     public void assertMuchThreadsAccessThreadSynchronized() {
         ThreadEntity threadEntity = new ThreadEntity();
-        CommonThreadExtThread commonThreadExtThread = new CommonThreadExtThread(threadEntity);
-        for (int i = 0; i < 10000; i++) {
-            commonThreadExtThread.start();
+        for (int i = 0; i < 500; i++) {
+            new CommonThreadExtThread(threadEntity).start();
         }
-        assertThat(threadEntity.getNum(), is(10000));
+        Thread.sleep(5000);
+        assertThat(threadEntity.getNum(), is(501));
     }
     
     public static void main(String[] args) {
