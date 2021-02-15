@@ -76,6 +76,7 @@ public class RedissonLockTest {
         @SneakyThrows
         public void run() {
             RLock redisLock = redissonClient.getLock("redisLock");
+            // 尝试加锁，如果此时获取不到锁，则等待10秒，如果拿到锁，则10秒之后自动释放
             boolean tryLock = redisLock.tryLock(10, 10, TimeUnit.SECONDS);
             if (!tryLock) {
                 log.info("未获取到锁");
