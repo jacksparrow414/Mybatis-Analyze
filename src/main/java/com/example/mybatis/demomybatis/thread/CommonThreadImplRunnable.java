@@ -9,7 +9,7 @@ import lombok.SneakyThrows;
  * 1、实现Runnable接口-启动方式- (new Thread(new CommonThreadImplRunnable())).start();
  * 2、继承Thread类-启动方式- (new CommonThreadExtThread()).start();
  *
- *
+ * <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/runthread.html">官方文档</a>
  * @author jacksparrow414
  * @date 2020/10/3
  */
