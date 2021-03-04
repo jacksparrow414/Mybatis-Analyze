@@ -1,10 +1,10 @@
 package com.example.mybatis.demomybatis.algorithms;
 
+import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Arrays;
-
 /**
+ * 冒泡排序属于交换排序
  * 冒泡排序的核心思想是冒泡：两两比较
  * 冒泡有两种方式，一种是从上往下冒泡，一种是从下往上冒泡，两个for循环，最主要的是里面的第二个for循环
  * 每次循环必能得到集合中的最大或者最小值
