@@ -1,7 +1,8 @@
 package com.example.mybatis.demomybatis.algorithms;
 
-import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Arrays;
 
 /**
  * 冒泡排序的核心思想是冒泡：两两比较
@@ -93,14 +94,14 @@ public class BubbleSort {
         
         int[] nums = new int[]{9,1,5,8,3,7,4,6,2};
         bubbleSort.bubbleSortDownToUp(nums);
-        log.info("自下由上的最终排序结果为{}", Arrays.toString(nums));
+        log.info("自下由上的最终排序结果为{}", nums);
         
         int[] finalUpToDownNums = new int[]{9,1,5,8,3,7,4,6,2};
         bubbleSort.bubbleSortUpToDown(finalUpToDownNums);
-        log.info("自上由下的最终排序结果为{}", Arrays.toString(finalUpToDownNums));
+        log.info("自上由下的最终排序结果为{}", finalUpToDownNums);
         
         int[] optimizeNums = new int[]{2,1,3,4,5,6,7,8,9};
         bubbleSort.bubbleSortDownToUpOptimize(optimizeNums);
-        log.info("优化之后的排序结果为{}", Arrays.toString(optimizeNums));
+        log.info("优化之后的排序结果为{}", optimizeNums);
     }
 }
