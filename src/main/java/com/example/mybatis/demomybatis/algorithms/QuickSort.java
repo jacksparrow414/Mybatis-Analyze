@@ -96,7 +96,12 @@ public class QuickSort {
      * 不再选取固定位置0作为中间位置，【选取中间位置的值作为枢轴】
      */
     private int partitionSmallToBigFromMiddle(int[] nums, int left, int right) {
+        // 不论是从头选基准值还是从中间位置选基准值，都是不太稳定
         int middle = (left+right) /2 ;
+        // 可以使用随机数，随机一个left、right之间的值，然后这个值和left或者right交换，这样很大程度上解决了不稳定的问题
+        int randomIndex = left + (int) (Math.random() * (right - left + 1));
+        // 根据randomIndex的数值最终是跟left交换还是right交换
+        // 更高级的是三数取中
         int pivotKey = nums[middle];
         while (left <= right) {
             while (nums[right] > pivotKey) {
