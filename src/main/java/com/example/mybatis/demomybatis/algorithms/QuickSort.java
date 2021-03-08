@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
  * 快排的基本思想是：
  * 通过一次递归，找到一个中间值
  * 这个中间值满足，【在中间值的左边都比中间值小，在中间值的右边都比中间值大】
+ * 时间复杂度-最好nlogn,最坏n2
  * @author jacksparrow414
  * @date 2021/3/4
  */
@@ -102,7 +103,18 @@ public class QuickSort {
         int randomIndex = left + (int) (Math.random() * (right - left + 1));
         // 根据randomIndex的数值最终是跟left交换还是right交换
         // 更高级的是三数取中
-        int pivotKey = nums[middle];
+        int m = left + (right - left) / 2;
+        if (nums[left] > nums[right]) {
+            SortUtil.swap(nums, left, right);
+        }
+        if (nums[m] > nums[right]) {
+            SortUtil.swap(nums, right, m);
+        }
+        if (nums[m] > nums[left]) {
+            SortUtil.swap(nums, m, left);
+        }
+//        int pivotKey = nums[middle];
+        int pivotKey = nums[left];
         while (left <= right) {
             while (nums[right] > pivotKey) {
                 right--;
@@ -141,7 +153,7 @@ public class QuickSort {
     
     public static void main(String[] args) {
         QuickSort quickSort = new QuickSort();
-        int[] nums = new int[]{50,10,90,30,70,40,80,60,20};
+        int[] nums = new int[]{9,1,5,8,3,7,4,6,2};
         quickSort.quickSortTailFromMiddle(nums);
         log.info("快速排序的最终结果是{}", nums);
     }
