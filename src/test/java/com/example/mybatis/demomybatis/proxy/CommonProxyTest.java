@@ -3,6 +3,7 @@ package com.example.mybatis.demomybatis.proxy;
 import com.example.mybatis.demomybatis.handler.CommonProxyHandler;
 import com.example.mybatis.demomybatis.service.ProxyService;
 import com.example.mybatis.demomybatis.service.impl.ProxyServiceImpl;
+import com.google.common.reflect.Reflection;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Proxy;
@@ -26,6 +27,8 @@ public final class CommonProxyTest {
                 proxyService.getClass().getInterfaces(), commonProxyHandler);
         // 调用的其实是代理类中print方法，方法里会调用super.h.invoke。h-就是commonProxyHandler
         String s = proxyInstance.print("我是一个小代理");
+        // 直接使用guava的工具类
+        ProxyService proxyService1 = Reflection.newProxy(ProxyService.class, commonProxyHandler);
         System.out.println(s);
     }
 }
