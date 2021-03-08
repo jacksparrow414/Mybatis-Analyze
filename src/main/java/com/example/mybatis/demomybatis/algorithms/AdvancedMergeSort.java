@@ -3,6 +3,7 @@ package com.example.mybatis.demomybatis.algorithms;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 归并排序是稳定的：时间复杂度nlogn
  * 相较于{@link MergeSort},不使用辅助数组
  * @author jacksparrow414
  * @date 2021/3/6
