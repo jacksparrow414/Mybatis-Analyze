@@ -81,11 +81,11 @@ public class MergeSort {
         }
         // 如果都比较完了，发现数组1中还有元素，那么就将数组1中剩余的元素加到新数组的末尾
         // 这里为什么第一个数组在前面？因为上面的比较保证了数组1和数组2起码有一个被完全比较过
-        if (oneStart <=arrayOne.length-1) {
+        while (oneStart <=arrayOne.length-1) {
             result[resultStart++] = arrayOne[oneStart++];
         }
         // 同上
-        if (twoStart <=arrayTwo.length-1) {
+        while (twoStart <=arrayTwo.length-1) {
             result[resultStart++] = arrayTwo[twoStart++];
         }
         log.info("本次归并的结果为{}", result);
@@ -93,7 +93,7 @@ public class MergeSort {
     }
     
     public static void main(String[] args) {
-        int[] nums = new int[]{5,1,9,3,7,4,8,6,2};
+        int[] nums = new int[]{9,1,5,8,3,7,4,6,2};
         MergeSort mergeSort = new MergeSort();
         int[] ints = mergeSort.mergeNewArray(nums);
         log.info("归并排序的最终结果是{}", ints);

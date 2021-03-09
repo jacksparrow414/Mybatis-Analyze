@@ -70,10 +70,10 @@ public class AdvancedMergeSort {
                 result[resultStart++] = nums[lowStart++];
             }
         }
-        if (lowStart<=mid) {
+        while (lowStart<=mid) {
             result[resultStart++] = nums[lowStart++];
         }
-        if (highStart<= high) {
+        while (highStart<= high) {
             result[resultStart++] = nums[highStart++];
         }
         // 因为始终要在原始数据上进行比较，所以在每次归并之后，要替换原始数组的内容
@@ -83,7 +83,7 @@ public class AdvancedMergeSort {
     
     public static void main(String[] args) {
         AdvancedMergeSort advancedMergeSort = new AdvancedMergeSort();
-        int[] nums = new int[]{5,1,9,3,7,4,8,6,2};
+        int[] nums = new int[]{9,1,5,8,3,7,4,6,2};
         advancedMergeSort.mergeSort(nums, 0,  nums.length-1);
     }
 }
