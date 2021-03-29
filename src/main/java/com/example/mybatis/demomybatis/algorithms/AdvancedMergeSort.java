@@ -29,7 +29,8 @@ public class AdvancedMergeSort {
     public void mergeSort(int[] nums, int low, int high) {
         // 也就是上面所说的重合条件，也可以换成 low < high
         if (low < high) {
-            int mid  = (low+high) / 2;
+            // 这里为什么不使用( low + high ) /2 有可能出现数字越界，超过int最大值
+            int mid  = low + (high-low) / 2;
             mergeSort(nums, low, mid);
             mergeSort(nums, mid+1, high);
             // 最终归并之前，需要传入三个标记位来判断两个伪数组的界限
