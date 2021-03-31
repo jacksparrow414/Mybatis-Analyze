@@ -3,7 +3,6 @@ package com.example.mybatis.demomybatis.algorithms;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 /**
  * 求连续输入数字的中位数，解题思路:<a href= "https://leetcode-cn.com/problems/find-median-from-data-stream/solution/shu-ju-liu-de-zhong-wei-shu-by-leetcode/">leetcode题解</a>
@@ -19,15 +18,16 @@ public class MiddleNumber {
         while (scanner.hasNextInt()) {
             int i = scanner.nextInt();
             list.add(i);
-            List<Integer> sortList = list.stream().sorted().collect(Collectors.toList());
-            int size = sortList.size();
-            Integer middle;
+            list.sort(Integer::compareTo);
+            int size = list.size();
             if ( size % 2 == 0 ) {
-                middle = (sortList.get(size/2 -1) + sortList.get(size/2)) / 2;
+                double middle = (list.get(size/2 -1) + list.get(size/2)) / 2.0;
+                System.out.println("当前集合的中位数为：" + middle);
             }else {
-                middle = sortList.get(size/2);
+                int i1 = size / 2;
+                int middle = list.get(i1);
+                System.out.println("当前集合的中位数为：" + middle);
             }
-            System.out.println("当前集合的中位数为：" + middle);
         }
         System.out.println("程序结束");
         scanner.close();
