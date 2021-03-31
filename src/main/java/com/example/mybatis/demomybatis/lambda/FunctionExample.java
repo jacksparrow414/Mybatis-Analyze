@@ -17,7 +17,7 @@ public class FunctionExample {
      * @author jacksparrow414
      * @param gener gener
      * @param function 用来自定义的函数
-     * @return java.lang.Integer
+     * @return java.java.lang.Integer
      */
     public Integer getApplyValue(Gener gener, Function<Gener, Integer> function) {
         Preconditions.checkNotNull(function, "function必传");
@@ -33,7 +33,7 @@ public class FunctionExample {
      * @author jacksparrow414
      * @param gener gener
      * @param function 自定义函数
-     * @return java.lang.Integer
+     * @return java.java.lang.Integer
      */
     public Integer getComposeApplyValue(Gener gener, Function<Gener, Integer> function) {
        return function.compose(u -> {

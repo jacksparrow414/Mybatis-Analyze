@@ -19,6 +19,7 @@ import java.util.concurrent.locks.Lock;
  */
 public class TwinsLock implements Lock {
     
+    
     /**
      * 所有自定义的同步器都要继承AQS.
      *
