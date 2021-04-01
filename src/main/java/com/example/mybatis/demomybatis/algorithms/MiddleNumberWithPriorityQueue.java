@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 /**
  * 采用优先队列的方式.<a href="https://leetcode-cn.com/problems/find-median-from-data-stream/solution/you-xian-dui-lie-python-dai-ma-java-dai-ma-by-liwe/">解题思路</a>
+ * 优先队列的时间复杂度是logn，<a href="https://www.cxyxiaowu.com/5417.html">具体文章</a>
  * @author jacksparrow414
  * @date 2021/4/1 10:15
  */
