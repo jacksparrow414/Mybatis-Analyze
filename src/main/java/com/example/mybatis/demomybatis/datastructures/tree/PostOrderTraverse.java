@@ -2,6 +2,7 @@ package com.example.mybatis.demomybatis.datastructures.tree;
 
 import com.google.common.collect.Lists;
 import java.util.List;
+import java.util.Stack;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -33,12 +34,31 @@ public class PostOrderTraverse {
         list.add(currentNode);
     }
     
+    public void postOrderNonRecursive(BinaryTree binaryTree, List<String> list) {
+        Stack<BinaryTree> stack = new Stack<>();
+        while (binaryTree != null || !stack.isEmpty()){
+            while (binaryTree != null) {
+                stack.push(binaryTree);
+                binaryTree = binaryTree.getLeft();
+            }
+            binaryTree = stack.pop();
+            System.out.println(binaryTree.getVal());
+            list.add(binaryTree.getVal());
+            if (!stack.isEmpty() && binaryTree == stack.peek().getLeft()) {
+                binaryTree = stack.peek().getRight();
+            }else {
+                binaryTree = null;
+            }
+        }
+    }
+    
     public static void main(String[] args) {
         BinaryTree tree = TreeUtil.generateBinaryTree();
         PostOrderTraverse postOrderTraverse = new PostOrderTraverse();
-        postOrderTraverse.postOrder(tree);
+//        postOrderTraverse.postOrder(tree);
         List<String> nodes = Lists.newLinkedList();
-        postOrderTraverse.postOrderAndPrint(tree, nodes);
+//        postOrderTraverse.postOrderAndPrint(tree, node);
+        postOrderTraverse.postOrderNonRecursive(tree, nodes);
         log.info("后序遍历的结果是{}", nodes);
     }
 }
