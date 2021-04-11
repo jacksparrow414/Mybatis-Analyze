@@ -42,7 +42,7 @@ public final class LockConditionPrintNumber {
        @Override
        public void run() {
            while (num <= 10) {
-               lock.lock();
+               lock.tryLock();
                try {
                    if (num % 2 == 1) {
                        log.info("num值为{}", num++);
