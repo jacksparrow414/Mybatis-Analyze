@@ -2,6 +2,7 @@ package com.example.mybatis.demomybatis.datastructures.tree;
 
 import com.google.common.collect.Lists;
 import java.util.List;
+import java.util.Stack;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -38,12 +39,33 @@ public class InOrderTraverse {
         inOrderTraverseAndPrint(tree.getRight(), list);
     }
     
+    /**
+     * 非递归中序遍历.和{@link PreOrderTraverse#preOrderNonRecursive(BinaryTree, List)}一样，只不过位置变了而已
+     * @param tree 二叉树
+     * @param list list
+     */
+    public void inOrderNonRecursive(BinaryTree tree, List<String> list) {
+        Stack<BinaryTree> stack = new Stack<>();
+        while (tree !=null || !stack.isEmpty()) {
+            while (tree != null) {
+                stack.push(tree);
+                tree = tree.getLeft();
+            }
+            if (!stack.isEmpty()) {
+                tree = stack.pop();
+                list.add(tree.getVal());
+                tree = tree.getRight();
+            }
+        }
+    }
     public static void main(String[] args) {
         BinaryTree tree = TreeUtil.generateBinaryTree();
         InOrderTraverse inOrderTraverse = new InOrderTraverse();
-        inOrderTraverse.inOrderTraverse(tree);
+//        inOrderTraverse.inOrderTraverse(tree);
         List<String> nodes = Lists.newArrayList();
-        inOrderTraverse.inOrderTraverseAndPrint(tree, nodes);
+//        inOrderTraverse.inOrderTraverseAndPrint(tree, nodes);
+        
+        inOrderTraverse.inOrderNonRecursive(tree, nodes);
         log.info("中序遍历结果是{}", nodes);
     }
 }
