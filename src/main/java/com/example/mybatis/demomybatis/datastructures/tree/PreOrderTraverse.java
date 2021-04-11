@@ -2,6 +2,7 @@ package com.example.mybatis.demomybatis.datastructures.tree;
 
 import com.google.common.collect.Lists;
 import java.util.List;
+import java.util.Stack;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 
@@ -42,6 +43,10 @@ import org.springframework.lang.NonNull;
 @Slf4j
 public class PreOrderTraverse {
     
+    /**
+     * 递归调用前序遍历二叉树.
+     * @param binaryTree 二叉树
+     */
     public void preOrder(BinaryTree binaryTree) {
         if (binaryTree == null) {
             return;
@@ -64,12 +69,32 @@ public class PreOrderTraverse {
         preOrderAndPrint(binaryTree.getRight(), list);
     }
     
+    /**
+     * 非递归先序遍历二叉树,使用栈的数据结构.
+     * @param binaryTree 二叉树
+     */
+    public void preOrderNonRecursive(BinaryTree binaryTree, @NonNull List<String> list) {
+        Stack<BinaryTree> stack = new Stack<>();
+        while (binaryTree != null || !stack.isEmpty()) {
+            while (binaryTree != null) {
+                list.add(binaryTree.getVal());
+                stack.push(binaryTree);
+                binaryTree = binaryTree.getLeft();
+            }
+            if (!stack.isEmpty()) {
+                binaryTree = stack.pop();
+                binaryTree = binaryTree.getRight();
+            }
+        }
+    }
+    
     public static void main(String[] args) {
         BinaryTree tree = TreeUtil.generateBinaryTree();
         PreOrderTraverse preOrderTraverse = new PreOrderTraverse();
-        preOrderTraverse.preOrder(tree);
+//        preOrderTraverse.preOrder(tree);
         List<String> nodes = Lists.newArrayList();
-        preOrderTraverse.preOrderAndPrint(tree, nodes);
+//        preOrderTraverse.preOrderAndPrint(tree, nodes);
+        preOrderTraverse.preOrderNonRecursive(tree, nodes);
         log.info("前序遍历的结果是{}", nodes);
     }
 }
