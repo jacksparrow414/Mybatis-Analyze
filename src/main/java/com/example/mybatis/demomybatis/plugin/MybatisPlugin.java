@@ -13,7 +13,7 @@ import java.sql.PreparedStatement;
  *
  * 1、实现mybatis的interceptor接口的intercept方法
  * 2、在该类上是使用@Intercepts注解，Signature的type有四种：ParameterHandler、ResultSetHandler、StatementHandler 、Executor
- * @author duhongbo
+ * @author jacksparrow414
  * @date 2021/3/11 16:03
  */
 @Intercepts({

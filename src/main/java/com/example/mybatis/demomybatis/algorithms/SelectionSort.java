@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
  * 每一轮循环之后，能够确定对应index的值
  *
  * 个人认为，和冒泡排序的最大区别是，冒泡排序可以提前结束循环
- * @author duhongbo
+ * @author jacksparrow414
  * @date 2021/3/4 14:47
  */
 @Slf4j
