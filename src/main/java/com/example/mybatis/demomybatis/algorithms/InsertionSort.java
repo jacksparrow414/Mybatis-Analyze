@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
  * 每次循环确定当前index前的元素顺序有序
  *
  * 插入排序是小数组中性能最好的
- * @author duhongbo
+ * @author jacksparrow414
  * @date 2021/3/4 15:09
  */
 @Slf4j
