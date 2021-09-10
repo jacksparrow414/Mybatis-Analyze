@@ -33,5 +33,33 @@ public final class ThreadConcurrencyTest {
         new Thread(commonThreadImplRunnable).start();
         new Thread(commonThreadImplRunnable).start();
         new Thread(commonThreadImplRunnable).start();
+        // 关于Integer.valueOf(1) 会造成死锁的问题
+        // https://wiki.sei.cmu.edu/confluence/display/java/LCK01-J.+Do+not+synchronize+on+objects+that+may+be+reused
+        Integer lock = Integer.valueOf(1);
+        Integer lock2 = Integer.valueOf(1);
+//      Integer lock = new Integer(1);
+//      Integer lock2 = new Integer(1);
+        new Thread(() -> {
+            synchronized (lock) {
+                System.out.println("ThreadA获得锁");
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, "ThreadA").start();
+        new Thread(() -> {
+            synchronized (lock2) {
+                System.out.println("ThreadB获得锁");
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, "ThreadB").start();
     }
 }
