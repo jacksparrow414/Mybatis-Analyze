@@ -66,7 +66,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-solr</artifactId>
-            <version>4.1.7.RELEASE</version>
+            <version>4.3.12</version>
         </dependency>
         <!--开发jar包-->
         <dependency>
