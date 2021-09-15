@@ -21,7 +21,7 @@
         <commons.io.version>2.7</commons.io.version>
         <fastjson.version>1.2.69</fastjson.version>
         <solr.version>8.6.3</solr.version>
-        <huTool.version>5.3.2</huTool.version>
+        <huTool.version>5.7.9</huTool.version>
         <lombok.version>1.18.12</lombok.version>
         <druid.version>1.1.21</druid.version>
         <jedis.version>3.2.0</jedis.version>
