@@ -4,6 +4,12 @@ import cn.hutool.core.collection.CollUtil;
 import com.example.mybatis.demomybatis.jdbc.datasource.MyDataSource;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Preconditions;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import javax.sql.DataSource;
 import lombok.SneakyThrows;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.boot.context.properties.bind.Bindable;
@@ -11,13 +17,6 @@ import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
-
-import javax.sql.DataSource;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * 自定义数据源设置.
@@ -48,7 +47,7 @@ public class CustomDataSourceConfiguration implements EnvironmentAware {
         Map<String, Object> property = getDataSourcePropertyByPrefix("spring.datasource");
         Preconditions.checkState(CollUtil.isNotEmpty(property));
         Map<String, DataSource> dataSourceMap = new HashMap<>(1);
-        DataSource dataSource = (DataSource) Class.forName(property.get("type").toString()).newInstance();
+        DataSource dataSource = (DataSource) Class.forName(property.get("type").toString()).getDeclaredConstructor().newInstance();
         property.remove("type");
         Iterator<Entry<String, Object>> iterator = property.entrySet().iterator();
         while (iterator.hasNext()) {

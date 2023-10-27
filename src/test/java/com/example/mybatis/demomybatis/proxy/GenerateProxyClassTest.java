@@ -3,12 +3,11 @@ package com.example.mybatis.demomybatis.proxy;
 import com.example.mybatis.demomybatis.handler.CommonProxyHandler;
 import com.example.mybatis.demomybatis.service.ProxyService;
 import com.example.mybatis.demomybatis.service.impl.ProxyServiceImpl;
+import java.io.FileOutputStream;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import sun.misc.ProxyGenerator;
-
-import java.io.FileOutputStream;
-import java.lang.reflect.Proxy;
 
 /**
  * 测试生成 类的 代理类.
@@ -24,7 +23,11 @@ public class GenerateProxyClassTest {
         ProxyService proxyService = new ProxyServiceImpl();
         CommonProxyHandler commonProxyHandler = new CommonProxyHandler(proxyService,path);
         ProxyService proxyInstance = (ProxyService) Proxy.newProxyInstance(ProxyServiceImpl.class.getClassLoader(), ProxyServiceImpl.class.getInterfaces(), commonProxyHandler);
-        byte[] proxies = ProxyGenerator.generateProxyClass("$Proxy1", ProxyServiceImpl.class.getInterfaces());
+        Class cl = Class.forName("java.lang.reflect.ProxyGenerator");
+        Method m =cl.getDeclaredMethod("generateProxyClass",String.class,Class[].class);
+        m.setAccessible(true);
+        byte[] proxies = (byte[]) m.invoke("$Proxy1", ProxyServiceImpl.class.getInterfaces());
+//        byte[] proxies = ProxyGenerator.generateProxyClass("$Proxy1", ProxyServiceImpl.class.getInterfaces());
         FileOutputStream outputStream = null;
         outputStream = new FileOutputStream(path);
         outputStream.write(proxies);
