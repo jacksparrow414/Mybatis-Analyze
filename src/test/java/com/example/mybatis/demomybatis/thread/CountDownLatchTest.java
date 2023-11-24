@@ -39,4 +39,12 @@ public final class CountDownLatchTest {
         end.await();
         System.out.println("主线程开始执行");
     }
+
+    /**
+     * 直接参考CountDownLatch的注释即可，注释给出了一个完整的例子
+     */
+    @Test
+    public void assertLetTenThreadsRunAtTheSameTime() {
+        
+    }
 }
