@@ -1,7 +1,5 @@
 package com.example.mybatis.demomybatis.algorithms;
 
-import lombok.var;
-
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;

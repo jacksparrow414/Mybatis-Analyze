@@ -40,11 +40,15 @@ public final class CountDownLatchTest {
         System.out.println("主线程开始执行");
     }
 
-    /**
-     * 直接参考CountDownLatch的注释即可，注释给出了一个完整的例子
-     */
     @Test
-    public void assertLetTenThreadsRunAtTheSameTime() {
-        
+    @SneakyThrows
+    public void assertAllThreadsStartAtTheSameTime() {
+        CountDownLatch begin = new CountDownLatch(1);
+        for (int i = 0; i < 10; i++) {
+            new Thread(new CountDownLatchFixture(begin)).start();
+            begin.countDown();
+        }
+        Thread.currentThread().join(10000);
+        System.out.println("主线程开始执行");
     }
 }

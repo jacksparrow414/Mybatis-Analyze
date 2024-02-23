@@ -1,6 +1,6 @@
 package com.example.mybatis.demomybatis.solr;
 
-import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.map.MapUtil;
 import com.example.mybatis.demomybatis.entity.SolrUserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.solr.client.solrj.SolrClient;
@@ -77,7 +77,7 @@ public class SolrService {
      * @throws Exception
      */
     public void queryDataFromSolr()throws Exception{
-        Map<String,String> queryMap = CollectionUtil.newHashMap(16);
+        Map<String,String> queryMap = MapUtil.newHashMap(16);
         queryMap.put("q","*:*");
         queryMap.put("sort","age desc");
         MapSolrParams mapSolrParams = new MapSolrParams(queryMap);
