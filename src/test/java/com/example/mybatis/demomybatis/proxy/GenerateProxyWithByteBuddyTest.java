@@ -14,6 +14,11 @@ import java.io.File;
 
 public class GenerateProxyWithByteBuddyTest {
 
+    /**
+     * 被代理类的构造方法最好是公共的，不要是default或者private的，否则在生成代理类的实例是会报
+     * Caused by: java.lang.IllegalAccessError tried to access method 'void .<init>()' is in unnamed module of loader
+     * 如果构造方法必须是default的，见 https://stackoverflow.com/a/60613399/24757740
+     */
     @SneakyThrows
     @Test
     public void assertGenerateProxyWithByteBuddy() {
